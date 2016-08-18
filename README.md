@@ -1,2 +1,2 @@
 # moment
-an lib like momentjs.
+Parse, validate, manipulate, and display dates in Android.Inspired by momentjs.
