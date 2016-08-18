@@ -122,7 +122,6 @@ public class Moment {
         return new Moment(cal);
     }
 
-    
     private void setTimeToBeginningOfDay(Calendar calendar) {
         calendar.set(Calendar.HOUR_OF_DAY,0);
         calendar.set(Calendar.MINUTE,0);
