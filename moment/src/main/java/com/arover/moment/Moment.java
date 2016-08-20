@@ -2,6 +2,7 @@ package com.arover.moment;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * a date time class inspired by momentjs.
@@ -120,6 +121,18 @@ public class Moment {
         cal.set(Calendar.DAY_OF_MONTH, 1);
         setTimeToBeginningOfDay(cal);
         return new Moment(cal);
+    }
+
+    public String format(){
+        return new MomentFormater(this).format();
+    }
+
+    public String format(String dateFormat){
+        return new MomentFormater(this).format(dateFormat);
+    }
+
+    public String format(String dateFormat, Locale locale){
+        return new MomentFormater(this).format(dateFormat,locale);
     }
 
     private void setTimeToBeginningOfDay(Calendar calendar) {
