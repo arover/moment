@@ -1,5 +1,6 @@
 package com.arover.moment;
 
+import java.security.InvalidParameterException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -9,7 +10,7 @@ import java.util.Locale;
  */
 public class Moment {
     private final Calendar mCalendar;
-    static int[] sDaysOfMonth = new int[]{31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    private static int[] sDaysOfMonth = new int[]{31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
     private DayOfWeek mFirstDayOfWeek = DayOfWeek.SUNDAY;
 
@@ -65,6 +66,10 @@ public class Moment {
         return mCalendar.getTimeInMillis() / 1000;
     }
 
+    public long getMillisecond() {
+        return mCalendar.getTimeInMillis();
+    }
+
     public int getSecond(){
         return mCalendar.get(Calendar.SECOND);
     }
@@ -85,6 +90,50 @@ public class Moment {
         return Month.from(mCalendar.get(Calendar.MONTH));
     }
 
+    public int getYear(){
+        return mCalendar.get(Calendar.YEAR);
+    }
+
+    public boolean isLeapYear(){
+        return getYear() % 4 == 0;
+    }
+
+    public void setMillisecond(long timeInMillis){
+        if(timeInMillis < 0 )
+            throw new InvalidParameterException("can't millisecond to "+timeInMillis);
+
+        mCalendar.setTimeInMillis(timeInMillis);
+    }
+
+    public void setSecond(int sec){
+        if(sec < 0 || sec >59)
+            throw new InvalidParameterException("can't sec second to "+sec);
+        mCalendar.set(Calendar.SECOND,sec);
+    }
+
+    public void setMinute(int min){
+        if(min < 0 || min >59)
+            throw new InvalidParameterException("can't sec minute to "+min);
+        mCalendar.set(Calendar.MINUTE,min);
+    }
+
+    /**
+     *
+     * @param hour [0,23]
+     */
+    public void setHour(int hour){
+        if(hour < 0 || hour >23)
+            throw new InvalidParameterException("can't sec hour to "+hour);
+        mCalendar.set(Calendar.HOUR_OF_DAY, hour);
+    }
+
+    public void setDay(int day){
+        if(day < 0 || day >23)
+            throw new InvalidParameterException("can't sec minute to "+day);
+
+        mCalendar.set(Calendar.DAY_OF_MONTH, day);
+    }
+
     public void setMonth(Month month){
         mCalendar.set(Calendar.MONTH, month.ordinal());
     }
@@ -97,13 +146,7 @@ public class Moment {
         mCalendar.set(Calendar.MONTH, month);
     }
 
-    public long getMillisecond() {
-        return mCalendar.getTimeInMillis();
-    }
 
-    public void setMillisecond(long timeInMillis){
-        mCalendar.setTimeInMillis(timeInMillis);
-    }
 
     public Moment setBeginningOfDay() {
         setTimeToBeginningOfDay(mCalendar);
@@ -124,15 +167,15 @@ public class Moment {
     }
 
     public String format(){
-        return new MomentFormater(this).format();
+        return new MomentFormat(this).format();
     }
 
     public String format(String dateFormat){
-        return new MomentFormater(this).format(dateFormat);
+        return new MomentFormat(this).format(dateFormat);
     }
 
     public String format(String dateFormat, Locale locale){
-        return new MomentFormater(this).format(dateFormat,locale);
+        return new MomentFormat(this).format(dateFormat,locale);
     }
 
     private void setTimeToBeginningOfDay(Calendar calendar) {

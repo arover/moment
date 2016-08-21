@@ -6,10 +6,10 @@ import java.util.Locale;
 /**
  * Created by minstrel on 8/20/16.
  */
-public class MomentFormater {
+public class MomentFormat {
     private final Moment mMoment;
 
-    public MomentFormater(Moment moment) {
+    public MomentFormat(Moment moment) {
         mMoment = moment;
     }
 
@@ -31,10 +31,11 @@ public class MomentFormater {
         return format.format(mMoment.getDate());
     }
 
-    public String dateWest() {
-        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault());
-        return format.format(mMoment.getDate());
+    public String date(String format) {
+        SimpleDateFormat formatter = new SimpleDateFormat(format, Locale.getDefault());
+        return formatter.format(mMoment.getDate());
     }
+
     public String format(String dateFormat) {
         SimpleDateFormat format = new SimpleDateFormat(dateFormat, Locale.getDefault());
         return format.format(mMoment.getDate());
