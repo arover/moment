@@ -17,8 +17,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Moment now = new Moment();
-        Log.d(TAG,"now.format()="+now.format());
-        Log.d(TAG,"locale "+ Locale.getDefault().getISO3Country());
+        Moment moment = new Moment();
+        moment.setDay(19);
+        Moment m1 = new Moment();
+        m1.setDay(21);
+        Log.d(TAG,"now.format()="+moment.fromNow(this,m1));
     }
 }

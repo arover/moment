@@ -1,5 +1,7 @@
 package com.arover.moment;
 
+import android.content.Context;
+
 import java.security.InvalidParameterException;
 import java.util.Calendar;
 import java.util.Date;
@@ -66,7 +68,11 @@ public class Moment {
         return mCalendar.getTimeInMillis() / 1000;
     }
 
-    public long getMillisecond() {
+    /**
+     *
+     * @return time in millisecond
+     */
+    public long getTimeInMillis() {
         return mCalendar.getTimeInMillis();
     }
 
@@ -147,6 +153,12 @@ public class Moment {
     }
 
 
+    public String fromNow(Context context){
+        return new MomentFormat(this).fromNow(context);
+    }
+    public String fromNow(Context context, Moment moment) {
+        return new MomentFormat(this).fromNow(context, moment);
+    }
 
     public Moment setBeginningOfDay() {
         setTimeToBeginningOfDay(mCalendar);
@@ -191,4 +203,6 @@ public class Moment {
         calendar.set(Calendar.SECOND,59);
         calendar.set(Calendar.MILLISECOND,999);
     }
+
+
 }
