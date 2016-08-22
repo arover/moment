@@ -105,6 +105,60 @@ public class Moment {
         mCalendar.setTimeInMillis(timeInMillis);
     }
 
+    /**
+     *
+     * @param moment the moment
+     * @return true if before the moment
+     */
+    public boolean isBefore(Moment moment){
+        return getMillisecond() < moment.getMillisecond();
+    }
+
+    /**
+     *
+     * @param moment the moment
+     * @return true if before the moment
+     */
+    public boolean isBeforeOrSame(Moment moment){
+        return getMillisecond() <= moment.getMillisecond();
+    }
+
+    /**
+     *
+     * @return Chinese Lunar
+     */
+    public Lunar getLunar(){
+        return new Lunar(getMillisecond());
+    }
+
+    /**
+     *
+     * @param moment the moment
+     * @return true if after the moment
+     */
+    public boolean isAfter(Moment moment){
+        return getMillisecond() > moment.getMillisecond();
+    }
+
+    /**
+     *
+     * @param moment the moment
+     * @return true if after the moment
+     */
+    public boolean isAfterOrSame(Moment moment){
+        return getMillisecond() >= moment.getMillisecond();
+    }
+
+    /**
+     *
+     *
+     * @return true if moment is between start and end.
+     */
+    public boolean isBetween(Moment start, Moment end){
+        return getMillisecond() > start.getMillisecond()
+                && getMillisecond() < end.getMillisecond();
+    }
+
     public Moment setBeginningOfDay() {
         setTimeToBeginningOfDay(mCalendar);
         return this;
