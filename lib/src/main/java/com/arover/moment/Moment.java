@@ -1,5 +1,9 @@
 package com.arover.moment;
 
+import android.util.Log;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -8,7 +12,8 @@ import java.util.Locale;
  * a date time class inspired by momentjs.
  */
 public class Moment {
-    private final Calendar mCalendar;
+    private Calendar mCalendar;
+    private static final String TAG = "Moment";
     static int[] sDaysOfMonth = new int[]{31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
     private DayOfWeek mFirstDayOfWeek = DayOfWeek.SUNDAY;
@@ -29,6 +34,22 @@ public class Moment {
     public Moment(long timeInMillis) {
         mCalendar = Calendar.getInstance();
         mCalendar.setTimeInMillis(timeInMillis);
+    }
+
+    /**
+     *
+     * @param dateText to be parse
+     */
+    public Moment(String dateText, String format) throws ParseException {
+        SimpleDateFormat formatter = new SimpleDateFormat(format,Locale.getDefault());
+        mCalendar = Calendar.getInstance();
+        try {
+            Date date = formatter.parse(dateText);
+            mCalendar.setTimeInMillis(date.getTime());
+        } catch (ParseException e) {
+            Log.e(TAG,"(ParseException dateText "+dateText + " with format "+format);
+            throw e;
+        }
     }
 
     public Calendar getCalendar() {
