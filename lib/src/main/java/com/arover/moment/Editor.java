@@ -1,5 +1,6 @@
 package com.arover.moment;
 
+import java.security.InvalidParameterException;
 import java.util.Calendar;
 
 /**
@@ -9,18 +10,12 @@ import java.util.Calendar;
 
 public class Editor {
 
-    private static final int YEAR = 1;
-    private static final int MONTH = 2;
-    private static final int DAY = 3;
-    private static final int HOUR = 4;
-    private static final int MINUTE = 5;
-    private static final int SECOND = 6;
-    private static final int MILISECOND = 7;
-
     private Moment mMoment;
+    private Calendar mCalendar;
 
     public Editor(Moment moment) {
         mMoment = moment;
+        mCalendar = moment.getCalendar();
     }
 
     /**
@@ -28,31 +23,106 @@ public class Editor {
      * @param x 0-n
      * @param unit time unit
      */
-    public void plus(int x, int unit){
-        
+    private void set(int x, int unit){
         switch (unit){
-            case YEAR:
-                mMoment.getCalendar().add(Calendar.YEAR, x);
+            case MomentUnit.YEAR:
+                mCalendar.add(Calendar.YEAR, x);
                 break;
-            case MONTH:
-                mMoment.getCalendar().add(Calendar.MONTH, x);
+            case MomentUnit.MONTH:
+                mCalendar.add(Calendar.MONTH, x);
                 break;
-            case DAY:
-                mMoment.getCalendar().add(Calendar.DAY_OF_YEAR, x);
+            case MomentUnit.DAY:
+                mCalendar.add(Calendar.DAY_OF_YEAR, x);
                 break;
-            case HOUR:
-                mMoment.getCalendar().add(Calendar.HOUR,x);
+            case MomentUnit.HOUR:
+                mCalendar.add(Calendar.HOUR,x);
                 break;
-            case MINUTE:
-                mMoment.getCalendar().add(Calendar.MINUTE,x);
+            case MomentUnit.MINUTE:
+                mCalendar.add(Calendar.MINUTE,x);
                 break;
-            case SECOND:
-                mMoment.getCalendar().add(Calendar.SECOND,x);
+            case MomentUnit.SECOND:
+                mCalendar.add(Calendar.SECOND,x);
                 break;
-            case MILISECOND:
-                mMoment.getCalendar().add(Calendar.MILLISECOND,x);
+            case MomentUnit.MILISECOND:
+                mCalendar.add(Calendar.MILLISECOND,x);
                 break;
         }
     }
 
+    public void add(int n, int unit){
+        set(n,unit);
+    }
+
+    /**
+     * minux x int time unit.
+     * @param n the amount to minus to the field
+     * @param unit time field/unit.
+     *
+     */
+    public void minus(int n, int unit){
+        set(-n, unit);
+    }
+
+    public void setFirstDayOfWeek(DayOfWeek dayOfWeek){
+//        mFirstDayOfWeek = dayOfWeek;
+    }
+
+    public void setMillisecond(long timeInMillis){
+        if(timeInMillis < 0 )
+            throw new InvalidParameterException("can't millisecond to "+timeInMillis);
+
+        mCalendar.setTimeInMillis(timeInMillis);
+    }
+
+    public void setSecond(int sec){
+        if(sec < 0 || sec >59)
+            throw new InvalidParameterException("can't sec second to "+sec);
+        mCalendar.set(Calendar.SECOND,sec);
+    }
+
+    public void setMinute(int min){
+        if(min < 0 || min >59)
+            throw new InvalidParameterException("can't sec minute to "+min);
+        mCalendar.set(Calendar.MINUTE,min);
+    }
+
+    /**
+     *
+     * @param hour [0,23]
+     */
+    public void setHour(int hour){
+        if(hour < 0 || hour >23)
+            throw new InvalidParameterException("can't sec hour to "+hour);
+        mCalendar.set(Calendar.HOUR_OF_DAY, hour);
+    }
+
+    public void setDayOfMonth(int day){
+        if(day < 0 || day >23)
+            throw new InvalidParameterException("can't sec minute to "+day);
+
+        mCalendar.set(Calendar.DAY_OF_MONTH, day);
+    }
+
+    public void setMonth(Month month){
+        mCalendar.set(Calendar.MONTH, month.ordinal());
+    }
+
+    /**
+     *
+     * @param month [Calendar.JANUARY,Calendar.DECEMBER]
+     */
+    public void setMonth(int month){
+        mCalendar.set(Calendar.MONTH, month);
+    }
+
+
+    public Moment setBeginningOfDay() {
+        Util.setTimeToBeginningOfDay(mCalendar);
+        return mMoment;
+    }
+
+    public Moment setEndOfDay() {
+        Util.setTimeToEndOfDay(mCalendar);
+        return mMoment;
+    }
 }
