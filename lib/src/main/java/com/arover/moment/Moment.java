@@ -10,35 +10,56 @@ import java.util.Locale;
 
 /**
  * a date time class inspired by momentjs.
+ * @author arover
  */
 public class Moment {
-    private Calendar mCalendar;
     private static final String TAG = "Moment";
-    static int[] sDaysOfMonth = new int[]{31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    private static int[] sDaysOfMonth = new int[]{31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+
+    private Calendar mCalendar;
 
     private DayOfWeek mFirstDayOfWeek = DayOfWeek.SUNDAY;
 
-    public Moment(Calendar now) {
-        mCalendar = now;
+    /**
+     * Constructs a {@code Moment} instance using the given {@code Calendar}.
+     * @param calendar the calendar
+     */
+    public Moment(Calendar calendar) {
+        mCalendar = calendar;
     }
 
+    /**
+     * Constructs a {@code Moment} instance using default calendar
+     */
     public Moment() {
         mCalendar = Calendar.getInstance();
     }
 
+    /**
+     * init moment with year, month, day.
+     * @param year year , eg. 2016
+     * @param month zero based. [0,11]
+     * @param day [1,31]
+     */
     public Moment(int year, int month, int day) {
         mCalendar = Calendar.getInstance();
         mCalendar.set(year, month, day);
     }
 
+    /**
+     * init moment with time in milliseconds
+     * @param timeInMillis time in milliseconds
+     */
     public Moment(long timeInMillis) {
         mCalendar = Calendar.getInstance();
         mCalendar.setTimeInMillis(timeInMillis);
     }
 
     /**
-     *
+     * init moment by parse text with specific format.
      * @param dateText to be parse
+     * @param format date format of dateText.
+     * @throws ParseException
      */
     public Moment(String dateText, String format) throws ParseException {
         SimpleDateFormat formatter = new SimpleDateFormat(format,Locale.getDefault());
