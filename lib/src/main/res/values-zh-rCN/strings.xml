@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Moment</string>
+    <string name="now">刚刚</string>
+    <string name="in_secs">%1$d秒</string>
+    <string name="in_mins">%1$d分</string>
+    <string name="in_hours">%1$d小时</string>
+    <string name="in_days">%1$d天</string>
+    <string name="in_years">%1$d年</string>
+</resources>

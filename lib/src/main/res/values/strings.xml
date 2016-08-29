@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Moment</string>
+
+    <string name="now">now</string>
+    <string name="in_secs">%1$dsec</string>
+    <string name="in_mins">%1$dmin</string>
+    <string name="in_hours">%1$dh</string>
+    <string name="in_days">%1$dd</string>
+    <string name="in_years">%1$dyear(s)</string>
 </resources>

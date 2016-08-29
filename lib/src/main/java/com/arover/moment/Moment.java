@@ -1,45 +1,45 @@
 package com.arover.moment;
 
 import android.util.Log;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.io.Serializable;
+
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 
 /**
  * a date time class inspired by momentjs.
  * @author arover
  */
-public class Moment {
-    private static final String TAG = "Moment";
-    private static int[] sDaysOfMonth = new int[]{31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+public class Moment implements Parcelable, Serializable{
 
-    private Calendar mCalendar;
 
-    private DayOfWeek mFirstDayOfWeek = DayOfWeek.SUNDAY;
+    private final Calendar mCalendar;
 
     /**
-     * Constructs a {@code Moment} instance using the given {@code Calendar}.
-     * @param calendar the calendar
+     * construct a moment using the specific calendar instance
+     * @param calendar specific the time
      */
     public Moment(Calendar calendar) {
         mCalendar = calendar;
     }
 
     /**
-     * Constructs a {@code Moment} instance using default calendar
+     * construct a moment using the default calendar instance
      */
     public Moment() {
         mCalendar = Calendar.getInstance();
     }
 
     /**
-     * init moment with year, month, day.
-     * @param year year , eg. 2016
-     * @param month zero based. [0,11]
-     * @param day [1,31]
+     * Allocates a <code>Moment</code> object
+     * specified by the <code>year</code>, <code>month</code>, and
+     * <code>date</code> arguments.
+     * @param   year    the year minus 1900.
+     * @param   month   the month between 0-11.
+     * @param   day    the day of the month between 1-31.
      */
     public Moment(int year, int month, int day) {
         mCalendar = Calendar.getInstance();
@@ -47,8 +47,8 @@ public class Moment {
     }
 
     /**
-     * init moment with time in milliseconds
-     * @param timeInMillis time in milliseconds
+     * construct a moment with time in millisecond
+     * @param timeInMillis time in millisecond
      */
     public Moment(long timeInMillis) {
         mCalendar = Calendar.getInstance();
@@ -56,192 +56,112 @@ public class Moment {
     }
 
     /**
-     * init moment by parse text with specific format.
-     * @param dateText to be parse
-     * @param format date format of dateText.
-     * @throws ParseException
+     * construct a moment with time in millisecond
+     * @param timeInSeconds time in seconds
      */
-    public Moment(String dateText, String format) throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat(format,Locale.getDefault());
+    public Moment(int timeInSeconds){
         mCalendar = Calendar.getInstance();
-        try {
-            Date date = formatter.parse(dateText);
-            mCalendar.setTimeInMillis(date.getTime());
-        } catch (ParseException e) {
-            Log.e(TAG,"(ParseException dateText "+dateText + " with format "+format);
-            throw e;
-        }
+        mCalendar.setTimeInMillis(timeInSeconds*1000);
     }
 
+    protected Moment(Parcel in) {
+        mCalendar = Calendar.getInstance();
+        mCalendar.setTimeInMillis(in.readInt());
+    }
+
+    public static final Creator<Moment> CREATOR = new Creator<Moment>() {
+        @Override
+        public Moment createFromParcel(Parcel in) {
+            return new Moment(in);
+        }
+
+        @Override
+        public Moment[] newArray(int size) {
+            return new Moment[size];
+        }
+    };
+
+    /**
+     *
+     * @return a {@code Calendar} object of this moment
+     */
     public Calendar getCalendar() {
         return mCalendar;
     }
 
-    public Moment getLastMonday(){
-
-        Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(mCalendar.getTimeInMillis());
-        int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
-        int offset = ((Calendar.MONDAY-dayOfWeek)-7)%7;
-        cal.add(Calendar.DAY_OF_MONTH, offset);
-        setTimeToBeginningOfDay(cal);
-        return new Moment(cal);
-    }
-
-    public void setFirstDayOfWeek(DayOfWeek dayOfWeek){
-        mFirstDayOfWeek = dayOfWeek;
-    }
-
-    public int getDaysOfMonth(int year, int month) {
-        if (month == Calendar.FEBRUARY && year % 4 == 0) {
-            return 29;
-        }
-        return sDaysOfMonth[month];
-    }
-
-    public Date getDate(){
+    /**
+     *
+     * @return a date object of this moment
+     */
+    public Date getDate() {
         return new Date(mCalendar.getTimeInMillis());
     }
 
-    public long getTimeInSeconds() {
-        return mCalendar.getTimeInMillis() / 1000;
-    }
-
-    public int getSecond(){
-        return mCalendar.get(Calendar.SECOND);
-    }
-
-    public int getMinute(){
-        return mCalendar.get(Calendar.MINUTE);
-    }
-
-    public int getHour(){
-        return mCalendar.get(Calendar.HOUR_OF_DAY);
-    }
-
-    public int getDay(){
-        return mCalendar.get(Calendar.DAY_OF_MONTH);
-    }
-
-    public Month getMonth(){
-        return Month.from(mCalendar.get(Calendar.MONTH));
-    }
-
-    public void setMonth(Month month){
-        mCalendar.set(Calendar.MONTH, month.ordinal());
+    /**
+     *
+     * @return editor to modify this moment.
+     */
+    public Editor edit(){
+        return new Editor(this);
     }
 
     /**
      *
-     * @param month [Calendar.JANUARY,Calendar.DECEMBER]
+     * @return a query for you to do some queries.
      */
-    public void setMonth(int month){
-        mCalendar.set(Calendar.MONTH, month);
-    }
-
-    public long getMillisecond() {
-        return mCalendar.getTimeInMillis();
-    }
-
-    public void setMillisecond(long timeInMillis){
-        mCalendar.setTimeInMillis(timeInMillis);
+    public Query query(){
+        return new Query(this);
     }
 
     /**
      *
-     * @param moment the moment
-     * @return true if before the moment
+     * @return a field getter for you to get field like year, month, day, etc.
      */
-    public boolean isBefore(Moment moment){
-        return getMillisecond() < moment.getMillisecond();
+    public Field fields(){
+        return new Field(this);
     }
 
     /**
      *
-     * @param moment the moment
-     * @return true if before the moment
+     * @return a display for you to show specific format
      */
-    public boolean isBeforeOrSame(Moment moment){
-        return getMillisecond() <= moment.getMillisecond();
+    public Display display(){
+        return new Display(this);
     }
 
     /**
      *
-     * @return Chinese Lunar
+     * @return a copy of this moment.
      */
-    public Lunar getLunar(){
-        return new Lunar(getMillisecond());
+    public Moment copy(){
+        return new Moment(mCalendar.getTimeInMillis());
     }
 
     /**
      *
-     * @param moment the moment
-     * @return true if after the moment
+     * @param moment the moment you want to copy
+     * @return the copy of the moment
      */
-    public boolean isAfter(Moment moment){
-        return getMillisecond() > moment.getMillisecond();
+    public static Moment copy(Moment moment){
+        return new Moment(moment.getCalendar().getTimeInMillis());
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(mCalendar.getTimeInMillis());
     }
 
     /**
      *
-     * @param moment the moment
-     * @return true if after the moment
+     * @return format as iso 8601
      */
-    public boolean isAfterOrSame(Moment moment){
-        return getMillisecond() >= moment.getMillisecond();
-    }
-
-    /**
-     *
-     *
-     * @return true if moment is between start and end.
-     */
-    public boolean isBetween(Moment start, Moment end){
-        return getMillisecond() > start.getMillisecond()
-                && getMillisecond() < end.getMillisecond();
-    }
-
-    public Moment setBeginningOfDay() {
-        setTimeToBeginningOfDay(mCalendar);
-        return this;
-    }
-
-    public Moment setEndOfDay() {
-        setTimeToEndOfDay(mCalendar);
-        return this;
-    }
-
-    public Moment getFirstDayOfMonth() {
-        Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(mCalendar.getTimeInMillis());
-        cal.set(Calendar.DAY_OF_MONTH, 1);
-        setTimeToBeginningOfDay(cal);
-        return new Moment(cal);
-    }
-
-    public String format(){
-        return new MomentFormater(this).format();
-    }
-
-    public String format(String dateFormat){
-        return new MomentFormater(this).format(dateFormat);
-    }
-
-    public String format(String dateFormat, Locale locale){
-        return new MomentFormater(this).format(dateFormat,locale);
-    }
-
-    private void setTimeToBeginningOfDay(Calendar calendar) {
-        calendar.set(Calendar.HOUR_OF_DAY,0);
-        calendar.set(Calendar.MINUTE,0);
-        calendar.set(Calendar.SECOND,0);
-        calendar.set(Calendar.MILLISECOND,0);
-    }
-
-    private void setTimeToEndOfDay(Calendar calendar) {
-        calendar.set(Calendar.HOUR_OF_DAY,23);
-        calendar.set(Calendar.MINUTE,59);
-        calendar.set(Calendar.SECOND,59);
-        calendar.set(Calendar.MILLISECOND,999);
+    @Override
+    public String toString() {
+        return new Display(this).formatIso8601();
     }
 }

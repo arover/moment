@@ -3,10 +3,9 @@ package com.arover.momentsample;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.arover.moment.Moment;
-
-import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -16,7 +15,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Moment now = new Moment();
-        Log.d(TAG,"now.format()="+now.format());
+
+        Moment moment = new Moment();
+        moment.edit().setDayOfMonth(19);
+
+        Moment m1 = new Moment();
+        m1.edit().setDayOfMonth(21);
+
+        Log.d(TAG,"now.format()="+moment.display().fromNow(this,m1));
+        Log.d(TAG,"first day of month="+moment.query().firstDayOfMonth());
+        Log.d(TAG,"last monday="+moment.query().lastMonday());
+        TextView demoText = (TextView) findViewById(R.id.text);
+        demoText.setText(moment.query().lastMonday().toString());
+
     }
 }
