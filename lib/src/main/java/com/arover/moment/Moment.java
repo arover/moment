@@ -34,9 +34,7 @@ public class Moment implements Parcelable, Serializable{
     }
 
     /**
-     * Allocates a <code>Moment</code> object
-     * specified by the <code>year</code>, <code>month</code>, and
-     * <code>date</code> arguments.
+     * construct a moment using specified year, month, day.
      * @param   year    the year minus 1900.
      * @param   month   the month between 0-11.
      * @param   day    the day of the month between 1-31.
@@ -44,6 +42,14 @@ public class Moment implements Parcelable, Serializable{
     public Moment(int year, int month, int day) {
         mCalendar = Calendar.getInstance();
         mCalendar.set(year, month, day);
+        Util.setTimeToBeginningOfDay(mCalendar);
+    }
+
+
+    public Moment(int year, Month month, int day) {
+        mCalendar = Calendar.getInstance();
+        mCalendar.set(year, month.getIndex(), day);
+        Util.setTimeToBeginningOfDay(mCalendar);
     }
 
     /**

@@ -22,7 +22,7 @@ public enum Month {
     }
 
     public int getNumber(){
-        return ordinal() + 1;
+        return ordinal()+1;
     }
 
     public static Month from(int i) {
