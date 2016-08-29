@@ -46,45 +46,20 @@ public class Query {
         return new Moment(cal);
     }
 
-    public boolean isBefore(){
-        // TODO: 8/27/16 isBefore
-        return false;
+    public boolean isBefore(Moment moment){
+        return mCalendar.getTimeInMillis() < moment.getCalendar().getTimeInMillis();
     }
 
-    public boolean isBeforeOrSame(){
-        // TODO: 8/27/16 isBeforeOrSame
-        return false;
+    public boolean isBeforeOrSame(Moment moment){
+        return mCalendar.getTimeInMillis() <= moment.getCalendar().getTimeInMillis();
     }
 
-    public boolean isBeforeIn(MomentUnit momentUnit){
-        // TODO: 8/27/16 isBeforeIn momentUnit
-        return false;
+    public boolean isAfter(Moment moment){
+        return mCalendar.getTimeInMillis() > moment.getCalendar().getTimeInMillis();
     }
 
-    public boolean isBeforeOrSameIn(MomentUnit momentUnit){
-        // TODO: 8/27/16 isBeforeOrSameIn momentUnit
-        return false;
+    public boolean isAfterOrSame(Moment moment){
+        return mCalendar.getTimeInMillis() >= moment.getCalendar().getTimeInMillis();
     }
 
-    public boolean isAfter(){
-        // TODO: 8/27/16 isAfter
-        return false;
-    }
-
-
-    public boolean isAfterOrSame(){
-        // TODO: 8/27/16 isAfterOrSame
-        return false;
-    }
-
-    public boolean isAfterIn(MomentUnit momentUnit){
-        // TODO: 8/27/16 isAfter in momentUnit;
-        return false;
-    }
-
-
-    public boolean isAfterOrSameIn(MomentUnit momentUnit){
-        // TODO: 8/27/16 isAfterOrSameIn MomentUnit unit
-        return false;
-    }
 }

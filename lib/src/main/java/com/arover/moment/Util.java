@@ -3,7 +3,7 @@ package com.arover.moment;
 import java.util.Calendar;
 
 /**
- * Created by minstrel on 8/27/16.
+ * @author arover
  */
 public class Util {
 

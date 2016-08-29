@@ -65,22 +65,30 @@ public class Editor {
         }
     }
 
+    /**
+     *
+     * @param n the amount to add.
+     *          negative number will be transforming to positive.
+     * @param unit time unit.
+     */
     public void add(int n, int unit) {
+        if(n < 0){
+            n = Math.abs(n);
+        }
         set(n, unit);
     }
 
     /**
-     * minux x int time unit.
+     * minus amount of specific time unit time.
      *
      * @param n    the amount to minus to the field
      * @param unit time field/unit.
      */
     public void minus(int n, int unit) {
+        if(n > 0){
+            n = -n;
+        }
         set(-n, unit);
-    }
-
-    public void setFirstDayOfWeek(DayOfWeek dayOfWeek) {
-//        mFirstDayOfWeek = dayOfWeek;
     }
 
     public void setMillisecond(long timeInMillis) {
