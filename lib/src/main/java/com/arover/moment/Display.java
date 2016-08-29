@@ -26,6 +26,22 @@ public class Display {
         return format.format(mMoment.getDate());
     }
 
+    public String shortestDate() {
+        SimpleDateFormat format = new SimpleDateFormat("M/d", Locale.getDefault());
+        return format.format(mMoment.getDate());
+    }
+
+    public String date() {
+        SimpleDateFormat format = new SimpleDateFormat("MMM d", Locale.getDefault());
+        return format.format(mMoment.getDate());
+    }
+
+    public String simpleTime() {
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm", Locale.getDefault());
+        return format.format(mMoment.getDate());
+    }
+
+
     public String formatIso8601() {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale.getDefault());
         return format.format(mMoment.getDate());
@@ -36,7 +52,7 @@ public class Display {
         return format.format(mMoment.getDate());
     }
 
-    public String date() {
+    public String dateIso() {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         return format.format(mMoment.getDate());
     }
