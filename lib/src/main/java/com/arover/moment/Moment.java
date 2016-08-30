@@ -105,6 +105,13 @@ public class Moment implements Parcelable, Serializable{
 
     /**
      *
+     * @return chinese lunar calendar
+     */
+    public Lunar getLunar(){
+        return new Lunar(mCalendar.getTimeInMillis());
+    }
+    /**
+     *
      * @return editor to modify this moment.
      */
     public Editor edit(){
