@@ -17,10 +17,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Moment moment = new Moment();
-        moment.edit().setDayOfMonth(19);
+        moment.edit().setDay(19);
 
         Moment m1 = new Moment();
-        m1.edit().setDayOfMonth(21);
+        m1.edit().setDay(21);
 
         Log.d(TAG,"now.format()="+moment.display().fromNow(this,m1));
         Log.d(TAG,"first day of month="+moment.query().firstDayOfMonth());

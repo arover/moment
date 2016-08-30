@@ -1,25 +1,29 @@
 package com.arover.moment;
 
+import android.util.Log;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.io.Serializable;
+
 import java.util.Calendar;
 import java.util.Date;
 
 /**
  * a date time class inspired by momentjs.
+ * @author arover
  */
 public class Moment implements Parcelable, Serializable{
+
 
     private final Calendar mCalendar;
 
     /**
      * construct a moment using the specific calendar instance
-     * @param now the time
+     * @param calendar specific the time
      */
-    public Moment(Calendar now) {
-        mCalendar = now;
+    public Moment(Calendar calendar) {
+        mCalendar = calendar;
     }
 
     /**
@@ -30,9 +34,7 @@ public class Moment implements Parcelable, Serializable{
     }
 
     /**
-     * Allocates a <code>Moment</code> object
-     * specified by the <code>year</code>, <code>month</code>, and
-     * <code>date</code> arguments.
+     * construct a moment using specified year, month, day.
      * @param   year    the year minus 1900.
      * @param   month   the month between 0-11.
      * @param   day    the day of the month between 1-31.
@@ -40,6 +42,14 @@ public class Moment implements Parcelable, Serializable{
     public Moment(int year, int month, int day) {
         mCalendar = Calendar.getInstance();
         mCalendar.set(year, month, day);
+        Util.setTimeToBeginningOfDay(mCalendar);
+    }
+
+
+    public Moment(int year, Month month, int day) {
+        mCalendar = Calendar.getInstance();
+        mCalendar.set(year, month.getIndex(), day);
+        Util.setTimeToBeginningOfDay(mCalendar);
     }
 
     /**
@@ -93,6 +103,13 @@ public class Moment implements Parcelable, Serializable{
         return new Date(mCalendar.getTimeInMillis());
     }
 
+    /**
+     *
+     * @return chinese lunar calendar
+     */
+    public Lunar getLunar(){
+        return new Lunar(mCalendar.getTimeInMillis());
+    }
     /**
      *
      * @return editor to modify this moment.

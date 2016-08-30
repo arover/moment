@@ -71,11 +71,12 @@ public class Editor {
      *          negative number will be transforming to positive.
      * @param unit time unit.
      */
-    public void add(int n, int unit) {
+    public Moment add(int n, int unit) {
         if(n < 0){
             n = Math.abs(n);
         }
         set(n, unit);
+        return mMoment;
     }
 
     /**
@@ -84,57 +85,73 @@ public class Editor {
      * @param n    the amount to minus to the field
      * @param unit time field/unit.
      */
-    public void minus(int n, int unit) {
+    public Moment minus(int n, int unit) {
         if(n > 0){
             n = -n;
         }
         set(-n, unit);
+        return mMoment;
     }
 
-    public void setMillisecond(long timeInMillis) {
+    public Moment setMillisecond(long timeInMillis) {
         if (timeInMillis < 0)
             throw new InvalidParameterException("can't millisecond to " + timeInMillis);
 
         mCalendar.setTimeInMillis(timeInMillis);
+        return mMoment;
     }
 
-    public void setSecond(int sec) {
+    public Moment setSecond(int sec) {
         if (sec < 0 || sec > 59)
             throw new InvalidParameterException("can't sec second to " + sec);
         mCalendar.set(Calendar.SECOND, sec);
+        return mMoment;
     }
 
-    public void setMinute(int min) {
+    public Moment setMinute(int min) {
         if (min < 0 || min > 59)
             throw new InvalidParameterException("can't sec minute to " + min);
         mCalendar.set(Calendar.MINUTE, min);
+        return mMoment;
     }
 
     /**
      * @param hour [0,23]
      */
-    public void setHour(int hour) {
+    public Moment setHour(int hour) {
         if (hour < 0 || hour > 23)
             throw new InvalidParameterException("can't sec hour to " + hour);
         mCalendar.set(Calendar.HOUR_OF_DAY, hour);
+        return mMoment;
     }
 
-    public void setDayOfMonth(int day) {
+    public Moment setDay(int day) {
         if (day < 0 || day > 23)
-            throw new InvalidParameterException("can't sec minute to " + day);
+            throw new InvalidParameterException("can't sec day to " + day);
 
         mCalendar.set(Calendar.DAY_OF_MONTH, day);
+        return mMoment;
     }
 
-    public void setMonth(Month month) {
+    public Moment setDayOfYear(int day) {
+        if (day < 0 || day > 366)
+            throw new InvalidParameterException("can't sec day to " + day);
+
+        mCalendar.set(Calendar.DAY_OF_YEAR, day);
+        return mMoment;
+    }
+
+    public Moment setMonth(Month month) {
         mCalendar.set(Calendar.MONTH, month.ordinal());
+        return mMoment;
     }
 
     /**
      * @param month [Calendar.JANUARY,Calendar.DECEMBER]
      */
-    public void setMonth(int month) {
+    public Moment setMonth(int month) {
         mCalendar.set(Calendar.MONTH, month);
+        return mMoment;
     }
 
 
@@ -145,6 +162,11 @@ public class Editor {
 
     public Moment setEndOfDay() {
         Util.setTimeToEndOfDay(mCalendar);
+        return mMoment;
+    }
+
+    public Moment setYear(int year) {
+        mCalendar.set(Calendar.YEAR,year);
         return mMoment;
     }
 }
