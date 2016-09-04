@@ -1,5 +1,7 @@
 package com.arover.moment;
 
+import android.util.Log;
+
 import java.security.InvalidParameterException;
 import java.util.Calendar;
 
@@ -7,6 +9,7 @@ import java.util.Calendar;
  * @author arover
  */
 public class Query {
+    private static final String TAG = "Query";
     static int[] sDaysOfMonth = new int[]{31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
     private final Calendar mCalendar;
@@ -17,12 +20,12 @@ public class Query {
         mCalendar = moment.getCalendar();
     }
 
-    public Moment lastMonday(){
+    public Moment lastMonday() {
 
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(mCalendar.getTimeInMillis());
         int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
-        int offset = ((Calendar.MONDAY-dayOfWeek)-7)%7;
+        int offset = ((Calendar.MONDAY - dayOfWeek) - 7) % 7;
         cal.add(Calendar.DAY_OF_MONTH, offset);
         Util.setTimeToBeginningOfDay(cal);
         return new Moment(cal);
@@ -39,7 +42,7 @@ public class Query {
         return daysOfMonth(year, month.index());
     }
 
-    public boolean isLeapYear(){
+    public boolean isLeapYear() {
         int year = mMoment.fields().year();
         return isLeapYear(year);
     }
@@ -67,29 +70,24 @@ public class Query {
     /**
      * query two moment is same in same time unit.
      * "2016/10/1 10:20".isSame(DAY,"2016/10/1 9:10")? => true
-     * @param unit
-     * @param moment
-     * @return
+     *
+     * @param unit time unit
+     * @param moment moment to compare
+     * @return true if same with moment in specific time unit.
      */
-    public boolean isSame(int unit,Moment moment){
+    public boolean isSame(final int unit, final Moment moment) {
         switch (unit) {
             case MomentUnit.SECOND: {
                 long millis = mCalendar.getTimeInMillis() - moment.getCalendar().getTimeInMillis();
-                if (Math.abs(millis) < 1000)
-                    return true;
-                return false;
+                return Math.abs(millis) < 1000;
             }
             case MomentUnit.MINUTE: {
                 long sec = mCalendar.getTimeInMillis() - moment.getCalendar().getTimeInMillis();
-                if (Math.abs(sec) < 1000 * 59)
-                    return true;
-                return false;
+                return Math.abs(sec) < 1000 * 59;
             }
             case MomentUnit.HOUR: {
                 long min = mCalendar.getTimeInMillis() - moment.getCalendar().getTimeInMillis();
-                if (Math.abs(min) < 1000 * 3600)
-                    return true;
-                return false;
+                return Math.abs(min) < 1000 * 3600;
             }
             case MomentUnit.DAY: {
                 if (mMoment.fields().year() == moment.fields().year()
@@ -113,27 +111,30 @@ public class Query {
                 }
                 return false;
             }
+            default:
+                Log.e(TAG, "unknown unit=" + unit);
+                break;
         }
-        throw new InvalidParameterException("unknown time unit "+unit);
+        throw new InvalidParameterException("unknown time unit " + unit);
     }
 
-    public boolean isBefore(Moment moment){
+    public boolean isBefore(Moment moment) {
         return mCalendar.getTimeInMillis() < moment.getCalendar().getTimeInMillis();
     }
 
-    public boolean isBeforeOrSame(Moment moment){
+    public boolean isBeforeOrSame(Moment moment) {
         return mCalendar.getTimeInMillis() <= moment.getCalendar().getTimeInMillis();
     }
 
-    public boolean isAfter(Moment moment){
+    public boolean isAfter(Moment moment) {
         return mCalendar.getTimeInMillis() > moment.getCalendar().getTimeInMillis();
     }
 
-    public boolean isAfterOrSame(Moment moment){
+    public boolean isAfterOrSame(Moment moment) {
         return mCalendar.getTimeInMillis() >= moment.getCalendar().getTimeInMillis();
     }
 
-    public Moment moment(){
+    public Moment moment() {
         return mMoment;
     }
 }

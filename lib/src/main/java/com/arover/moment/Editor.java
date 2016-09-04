@@ -15,6 +15,7 @@ public class Editor {
 
     /**
      * construct a moment editor
+     *
      * @param moment for edit
      */
     public Editor(Moment moment) {
@@ -70,13 +71,12 @@ public class Editor {
     }
 
     /**
-     *
-     * @param n the amount to add.
-     *          negative number will be transforming to positive.
+     * @param n    the amount to add.
+     *             negative number will be transforming to positive.
      * @param unit time unit.
      */
     public Editor add(int n, int unit) {
-        if(n < 0){
+        if (n < 0) {
             n = Math.abs(n);
         }
         set(n, unit);
@@ -90,7 +90,7 @@ public class Editor {
      * @param unit time field/unit.
      */
     public Editor minus(int n, int unit) {
-        if(n > 0){
+        if (n > 0) {
             n = -n;
         }
         set(-n, unit);
@@ -99,6 +99,7 @@ public class Editor {
 
     /**
      * set time in millisecond
+     *
      * @param timeInMillis time in millisecond
      * @return editor for chain
      */
@@ -112,6 +113,7 @@ public class Editor {
 
     /**
      * set time in seconds
+     *
      * @param timeInSeconds time in seconds
      * @return editor for chain
      */
@@ -119,12 +121,13 @@ public class Editor {
         if (timeInSeconds < 0)
             throw new InvalidParameterException("can't time in seconds: " + timeInSeconds);
 
-        mCalendar.setTimeInMillis(timeInSeconds*1000);
+        mCalendar.setTimeInMillis(timeInSeconds * 1000);
         return this;
     }
 
     /**
      * set the second of the time
+     *
      * @param second 0-59
      * @return editor for chain
      */
@@ -134,8 +137,10 @@ public class Editor {
         mCalendar.set(Calendar.SECOND, second);
         return this;
     }
+
     /**
      * set the minute of the time
+     *
      * @param min minute , [0,59]
      * @return editor for chain
      */
@@ -148,6 +153,7 @@ public class Editor {
 
     /**
      * set the hour of day
+     *
      * @param hour [0,23]
      * @return editor for chain
      */
@@ -160,6 +166,7 @@ public class Editor {
 
     /**
      * set the day of month
+     *
      * @param day [1,31]
      * @return editor for chain
      */
@@ -170,8 +177,10 @@ public class Editor {
         mCalendar.set(Calendar.DAY_OF_MONTH, day);
         return this;
     }
+
     /**
      * set the day of year
+     *
      * @param day [1,366]
      * @return editor for chain
      */
@@ -185,6 +194,7 @@ public class Editor {
 
     /**
      * set month of moment
+     *
      * @return editor for chain
      */
     public Editor month(Month month) {
@@ -194,6 +204,7 @@ public class Editor {
 
     /**
      * set month of moment
+     *
      * @param month [Calendar.JANUARY,Calendar.DECEMBER]
      *              0-11
      */
@@ -212,6 +223,7 @@ public class Editor {
 
     /**
      * set time to the beginning of the day(23:59:59).
+     *
      * @return editor for chain
      */
     public Editor setEndOfDay() {
@@ -221,18 +233,19 @@ public class Editor {
 
     /**
      * change the year
+     *
      * @param year [0,...]
      * @return editor for chain
      */
     public Editor year(int year) {
-        mCalendar.set(Calendar.YEAR,year);
+        mCalendar.set(Calendar.YEAR, year);
         return this;
     }
 
     /**
      * @return the moment
      */
-    public Moment moment(){
+    public Moment moment() {
         return mMoment;
     }
 }

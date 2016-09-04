@@ -28,6 +28,5 @@ public class DisplayTest {
         moment.edit().hour(22).minute(30);
 
         assertEquals("22:30",moment.display().simpleTime());
-
     }
 }

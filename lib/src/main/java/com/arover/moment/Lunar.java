@@ -93,7 +93,7 @@ public final class Lunar {
     };
 
     /* all the lunar holidays */
-    private final Holiday[] mLunarHolidays = new Holiday[] {
+    private final Holiday[] mLunarHolidays = new Holiday[]{
             new Holiday(1, 1, "春节"),
             new Holiday(1, 15, "元宵节"),
             new Holiday(5, 5, "端午节"),
@@ -107,7 +107,7 @@ public final class Lunar {
     };
 
     /* all the solar days */
-    private final Holiday[] mSolarHolidays = new Holiday[] {
+    private final Holiday[] mSolarHolidays = new Holiday[]{
             new Holiday(1, 1, "元旦节"),
             new Holiday(2, 14, "情人节"),
             new Holiday(3, 8, "妇女节"),
@@ -181,8 +181,8 @@ public final class Lunar {
     };
 
     /* twenty eight stars with direction and fortune */
-    private final Star[][] mTwentyEightStars = new Star[][] {
-            new Star[] {
+    private final Star[][] mTwentyEightStars = new Star[][]{
+            new Star[]{
                     new Star("房日兔", "吉", "东方"),
                     new Star("心月狐", "凶", "东方"),
                     new Star("尾火虎", "吉", "东方"),
@@ -192,7 +192,7 @@ public final class Lunar {
                     new Star("氐土貉", "凶", "东方"),
             },
 
-            new Star[] {
+            new Star[]{
                     new Star("虚日鼠", "凶", "北方"),
                     new Star("危月燕", "凶", "北方"),
                     new Star("室火猪", "吉", "北方"),
@@ -202,7 +202,7 @@ public final class Lunar {
                     new Star("女士蝠", "凶", "北方"),
             },
 
-            new Star[] {
+            new Star[]{
                     new Star("昴日鸡", "凶", "西方"),
                     new Star("毕月乌", "吉", "西方"),
                     new Star("觜火猴", "凶", "西方"),
@@ -212,7 +212,7 @@ public final class Lunar {
                     new Star("胃土雉", "吉", "西方"),
             },
 
-            new Star[] {
+            new Star[]{
                     new Star("星日马", "凶", "南方"),
                     new Star("张月鹿", "吉", "南方"),
                     new Star("翼火蛇", "凶", "南方"),
@@ -257,9 +257,9 @@ public final class Lunar {
     /**
      * The constructor of Lunar calendar.
      *
-     * @param year the year
+     * @param year  the year
      * @param month the month
-     * @param day the day
+     * @param day   the day
      */
     public Lunar(int year, int month, int day) {
         setDate(year, month, day);
@@ -335,7 +335,7 @@ public final class Lunar {
         long offset = (millisec - baseDate.getTimeInMillis()) / 86400000;
 
         int daysInLunarYear = getLunarYearDays(mLunarYear);
-		/* get current lunar year */
+        /* get current lunar year */
         while (mLunarYear < 2100 && offset >= daysInLunarYear) {
             offset -= daysInLunarYear;
             daysInLunarYear = getLunarYearDays(++mLunarYear);
@@ -452,7 +452,7 @@ public final class Lunar {
     /**
      * Get total days of lunar month in normal case.
      *
-     * @param lunarYear lunar year
+     * @param lunarYear  lunar year
      * @param lunarMonth lunar month
      * @return total days
      */
@@ -463,12 +463,12 @@ public final class Lunar {
     /**
      * Get Coordinated Universal Time for given params.
      *
-     * @param year the year to set
+     * @param year  the year to set
      * @param month the month to set
-     * @param day the day to set
-     * @param hour the hour to set
-     * @param min the minute to set
-     * @param sec the second to set
+     * @param day   the day to set
+     * @param hour  the hour to set
+     * @param min   the minute to set
+     * @param sec   the second to set
      * @return Coordinated Universal Time
      */
     private synchronized long getUTC(int year, int month, int day, int hour, int min, int sec) {
@@ -511,7 +511,7 @@ public final class Lunar {
      * Get the day of solar terms.
      *
      * @param solarYear the specified solar year
-     * @param index the index of solar terms in {@link #SOLAR_TERM}
+     * @param index     the index of solar terms in {@link #SOLAR_TERM}
      * @return the day of solar terms
      */
     private int getSolarTermDay(int solarYear, int index) {
@@ -524,7 +524,7 @@ public final class Lunar {
      * Get the month of solar terms.
      *
      * @param solarYear the specified solar year
-     * @param index the index of solar terms in {@link #SOLAR_TERM}
+     * @param index     the index of solar terms in {@link #SOLAR_TERM}
      * @return the month of solar terms
      */
     private int getSolarTermMonth(int solarYear, int index) {
@@ -601,9 +601,9 @@ public final class Lunar {
     /**
      * Set date to get lunar data.
      *
-     * @param year the year
+     * @param year  the year
      * @param month the month
-     * @param day the day
+     * @param day   the day
      */
     public void setDate(int year, int month, int day) {
         Calendar calendar = Calendar.getInstance();
@@ -614,9 +614,9 @@ public final class Lunar {
     /**
      * Set lunar date, so then can get GregorianCalendar date.
      *
-     * @param year lunar year
-     * @param month lunar month
-     * @param day lunar day
+     * @param year   lunar year
+     * @param month  lunar month
+     * @param day    lunar day
      * @param isLeap the month is leap month or not
      */
     public void setLunarDate(int year, int month, int day, boolean isLeap) {
@@ -705,7 +705,7 @@ public final class Lunar {
      * Get lunar month in Chinese according to lunar month numeric.
      *
      * @param lunarMonth lunar month numeric
-     * @param isLeap is current month leap or not
+     * @param isLeap     is current month leap or not
      * @return lunar month in Chinese
      */
     public String getLunarMonth(int lunarMonth, boolean isLeap) {
