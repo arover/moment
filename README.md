@@ -1,6 +1,5 @@
-# moment
-Parse, validate, manipulate, and display dates in Android.Inspired by momentjs.
-moment implemented Parcelable and Serializable interface.
+# Moment
+Parse, validate, manipulate, and display dates in android. Inspired by momentjs.
 ## Usage
 ```java
     Moment moment = new Moment()   // create a moment with default calendar instance.
