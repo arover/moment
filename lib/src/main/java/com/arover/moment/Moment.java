@@ -64,7 +64,7 @@ public class Moment implements Parcelable, Serializable{
     }
 
     /**
-     * construct a moment with time in millisecond
+     * construct a moment with time in seconds
      * @param timeInSeconds time in seconds
      */
     public Moment(int timeInSeconds){
