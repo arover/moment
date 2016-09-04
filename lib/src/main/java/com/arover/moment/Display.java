@@ -14,64 +14,102 @@ public class Display {
     private static final String TAG = "MomentFormat";
     private final Moment mMoment;
 
+    /**
+     * display action
+     * @param moment moment to display
+     */
     public Display(Moment moment) {
         mMoment = moment;
     }
 
     /**
-     * @return "2014-09-0808:02:17-0500"
+     * default format: yyyy-MM-dd HH:mm:ss ,eg: 2014-09-0808:02:17-0500
+     * @return formatted date text
      */
     public String format() {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         return format.format(mMoment.getDate());
     }
 
+    /**
+     * format date with format "M/d",eg: 9/2
+     * @return M/d "9/2"
+     */
     public String shortestDate() {
         SimpleDateFormat format = new SimpleDateFormat("M/d", Locale.getDefault());
         return format.format(mMoment.getDate());
     }
-
+    /**
+     * format date with format "MMM d",eg: Sep 2
+     * @return "M/d" format date
+     */
     public String date() {
         SimpleDateFormat format = new SimpleDateFormat("MMM d", Locale.getDefault());
         return format.format(mMoment.getDate());
     }
 
+    /**
+     * format date with format "HH:mm",eg: 22:30
+     * @return "HH:mm" format date
+     */
     public String simpleTime() {
         SimpleDateFormat format = new SimpleDateFormat("HH:mm", Locale.getDefault());
         return format.format(mMoment.getDate());
     }
 
 
+    /**
+     * format date with format "yyyy-MM-dd'T'HH:mm:ssZ",eg: 2016-09-02T22:30:20:202+0800
+     * @return formatted date
+     */
     public String formatIso8601() {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale.getDefault());
         return format.format(mMoment.getDate());
     }
 
+    /**
+     * format date with format "HH:mm:ss",eg: 22:30:20
+     * @return formatted date
+     */
     public String time() {
         SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
         return format.format(mMoment.getDate());
     }
 
-    public String dateIso() {
+    /**
+     * format date with format "yyyy-MM-dd",eg: 2016-09-02
+     * @return formatted date
+     */
+    public String isoDate() {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         return format.format(mMoment.getDate());
     }
 
-    public String date(String format) {
-        SimpleDateFormat formatter = new SimpleDateFormat(format, Locale.getDefault());
-        return formatter.format(mMoment.getDate());
-    }
-
+    /**
+     * format date with specific format
+     * @param dateFormat date format string
+     * @return formatted date
+     */
     public String format(String dateFormat) {
         SimpleDateFormat format = new SimpleDateFormat(dateFormat, Locale.getDefault());
         return format.format(mMoment.getDate());
     }
-
+    /**
+     * format date with specific format and locale
+     * @param dateFormat date format string
+     * @return formatted date
+     */
     public String format(String dateFormat,Locale locale) {
         SimpleDateFormat format = new SimpleDateFormat(dateFormat, locale);
         return format.format(mMoment.getDate());
     }
 
+    /**
+     * A common way of displaying time
+     * @param context context for load string resource
+     * @param moment moment to compare with
+     * @return  timeago or relative time.
+     */
     public String fromNow(Context context, Moment moment){
         Calendar now = Calendar.getInstance();
         long secs = (now.getTimeInMillis() - moment.fields().timeInMillis()) / 1000;
@@ -104,6 +142,10 @@ public class Display {
         }
     }
 
+    /**
+     * @param context for string resource
+     * @see #fromNow(Context,Moment)
+     */
     public String fromNow(Context context){
         return fromNow(context,mMoment);
     }

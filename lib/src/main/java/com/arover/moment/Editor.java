@@ -13,6 +13,10 @@ public class Editor {
     private Moment mMoment;
     private Calendar mCalendar;
 
+    /**
+     * construct a moment editor
+     * @param moment for edit
+     */
     public Editor(Moment moment) {
         mMoment = moment;
         mCalendar = moment.getCalendar();
@@ -71,12 +75,12 @@ public class Editor {
      *          negative number will be transforming to positive.
      * @param unit time unit.
      */
-    public Moment add(int n, int unit) {
+    public Editor add(int n, int unit) {
         if(n < 0){
             n = Math.abs(n);
         }
         set(n, unit);
-        return mMoment;
+        return this;
     }
 
     /**
@@ -85,88 +89,150 @@ public class Editor {
      * @param n    the amount to minus to the field
      * @param unit time field/unit.
      */
-    public Moment minus(int n, int unit) {
+    public Editor minus(int n, int unit) {
         if(n > 0){
             n = -n;
         }
         set(-n, unit);
-        return mMoment;
-    }
-
-    public Moment setMillisecond(long timeInMillis) {
-        if (timeInMillis < 0)
-            throw new InvalidParameterException("can't millisecond to " + timeInMillis);
-
-        mCalendar.setTimeInMillis(timeInMillis);
-        return mMoment;
-    }
-
-    public Moment setSecond(int sec) {
-        if (sec < 0 || sec > 59)
-            throw new InvalidParameterException("can't sec second to " + sec);
-        mCalendar.set(Calendar.SECOND, sec);
-        return mMoment;
-    }
-
-    public Moment setMinute(int min) {
-        if (min < 0 || min > 59)
-            throw new InvalidParameterException("can't sec minute to " + min);
-        mCalendar.set(Calendar.MINUTE, min);
-        return mMoment;
+        return this;
     }
 
     /**
-     * @param hour [0,23]
+     * set time in millisecond
+     * @param timeInMillis time in millisecond
+     * @return editor for chain
      */
-    public Moment setHour(int hour) {
+    public Editor timeInMillis(long timeInMillis) {
+        if (timeInMillis < 0)
+            throw new InvalidParameterException("can't time in millisecond: " + timeInMillis);
+
+        mCalendar.setTimeInMillis(timeInMillis);
+        return this;
+    }
+
+    /**
+     * set time in seconds
+     * @param timeInSeconds time in seconds
+     * @return editor for chain
+     */
+    public Editor timeInSeconds(int timeInSeconds) {
+        if (timeInSeconds < 0)
+            throw new InvalidParameterException("can't time in seconds: " + timeInSeconds);
+
+        mCalendar.setTimeInMillis(timeInSeconds*1000);
+        return this;
+    }
+
+    /**
+     * set the second of the time
+     * @param second 0-59
+     * @return editor for chain
+     */
+    public Editor second(int second) {
+        if (second < 0 || second > 59)
+            throw new InvalidParameterException("can't sec second to " + second);
+        mCalendar.set(Calendar.SECOND, second);
+        return this;
+    }
+    /**
+     * set the minute of the time
+     * @param min minute , [0,59]
+     * @return editor for chain
+     */
+    public Editor minute(int min) {
+        if (min < 0 || min > 59)
+            throw new InvalidParameterException("can't sec minute to " + min);
+        mCalendar.set(Calendar.MINUTE, min);
+        return this;
+    }
+
+    /**
+     * set the hour of day
+     * @param hour [0,23]
+     * @return editor for chain
+     */
+    public Editor hour(int hour) {
         if (hour < 0 || hour > 23)
             throw new InvalidParameterException("can't sec hour to " + hour);
         mCalendar.set(Calendar.HOUR_OF_DAY, hour);
-        return mMoment;
+        return this;
     }
 
-    public Moment setDay(int day) {
-        if (day < 0 || day > 23)
-            throw new InvalidParameterException("can't sec day to " + day);
+    /**
+     * set the day of month
+     * @param day [1,31]
+     * @return editor for chain
+     */
+    public Editor day(int day) {
+        if (day < 0 || day > 31)
+            throw new InvalidParameterException("can't set day to " + day);
 
         mCalendar.set(Calendar.DAY_OF_MONTH, day);
-        return mMoment;
+        return this;
     }
-
-    public Moment setDayOfYear(int day) {
+    /**
+     * set the day of year
+     * @param day [1,366]
+     * @return editor for chain
+     */
+    public Editor dayOfYear(int day) {
         if (day < 0 || day > 366)
             throw new InvalidParameterException("can't sec day to " + day);
 
         mCalendar.set(Calendar.DAY_OF_YEAR, day);
-        return mMoment;
-    }
-
-    public Moment setMonth(Month month) {
-        mCalendar.set(Calendar.MONTH, month.ordinal());
-        return mMoment;
+        return this;
     }
 
     /**
-     * @param month [Calendar.JANUARY,Calendar.DECEMBER]
+     * set month of moment
+     * @return editor for chain
      */
-    public Moment setMonth(int month) {
+    public Editor month(Month month) {
+        mCalendar.set(Calendar.MONTH, month.ordinal());
+        return this;
+    }
+
+    /**
+     * set month of moment
+     * @param month [Calendar.JANUARY,Calendar.DECEMBER]
+     *              0-11
+     */
+    public Editor month(int month) {
         mCalendar.set(Calendar.MONTH, month);
-        return mMoment;
+        return this;
     }
 
-
-    public Moment setBeginningOfDay() {
+    /**
+     * set time to the beginning of the day(00:00:00).
+     */
+    public Editor setBeginningOfDay() {
         Util.setTimeToBeginningOfDay(mCalendar);
-        return mMoment;
+        return this;
     }
 
-    public Moment setEndOfDay() {
+    /**
+     * set time to the beginning of the day(23:59:59).
+     * @return editor for chain
+     */
+    public Editor setEndOfDay() {
         Util.setTimeToEndOfDay(mCalendar);
-        return mMoment;
+        return this;
     }
 
-    public Moment setYear(int year) {
+    /**
+     * change the year
+     * @param year [0,...]
+     * @return editor for chain
+     */
+    public Editor year(int year) {
         mCalendar.set(Calendar.YEAR,year);
+        return this;
+    }
+
+    /**
+     * @return the moment
+     */
+    public Moment moment(){
         return mMoment;
     }
 }

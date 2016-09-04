@@ -17,11 +17,11 @@ public enum Month {
     ,NOVEMBER
     ,DECEMBER;
 
-    public int getIndex(){
+    public int index(){
         return ordinal();
     }
 
-    public int getNumber(){
+    public int number(){
         return ordinal()+1;
     }
 

@@ -10,6 +10,10 @@ public class Field {
     private Moment mMoment;
     private Calendar mCalendar;
 
+    /**
+     * construct moment field getter.
+     * @param moment
+     */
     public Field(Moment moment) {
         mCalendar = moment.getCalendar();
         mMoment = moment;
@@ -25,6 +29,10 @@ public class Field {
      */
     public long timeInMillis() {
         return mCalendar.getTimeInMillis();
+    }
+
+    public int millis(){
+        return mCalendar.get(Calendar.MILLISECOND);
     }
 
     public int second(){
@@ -45,6 +53,14 @@ public class Field {
 
     public Month month(){
         return Month.from(mCalendar.get(Calendar.MONTH));
+    }
+
+    /**
+     *
+     * @return index of month , 0 - 11.
+     */
+    public int monthIndex(){
+        return mCalendar.get(Calendar.MONTH);
     }
 
     public int year(){

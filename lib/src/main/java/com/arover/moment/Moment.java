@@ -1,13 +1,15 @@
 package com.arover.moment;
 
-import android.util.Log;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.io.Serializable;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * a date time class inspired by momentjs.
@@ -48,7 +50,7 @@ public class Moment implements Parcelable, Serializable{
 
     public Moment(int year, Month month, int day) {
         mCalendar = Calendar.getInstance();
-        mCalendar.set(year, month.getIndex(), day);
+        mCalendar.set(year, month.index(), day);
         Util.setTimeToBeginningOfDay(mCalendar);
     }
 
@@ -68,6 +70,28 @@ public class Moment implements Parcelable, Serializable{
     public Moment(int timeInSeconds){
         mCalendar = Calendar.getInstance();
         mCalendar.setTimeInMillis(timeInSeconds*1000);
+    }
+
+    /**
+     * construct a moment by parsing date text with specific format and default locale
+     * @param dateText date text to be parse
+     */
+    public Moment(String dateText, String format) throws ParseException {
+        SimpleDateFormat formatter = new SimpleDateFormat(format, Locale.getDefault());
+        Date date = formatter.parse(dateText);
+        mCalendar = Calendar.getInstance();
+        mCalendar.setTimeInMillis(date.getTime());
+    }
+
+    /**
+     * construct a moment by parsing date text with specific format and locale
+     * @param dateText date text to be parse
+     */
+    public Moment(String dateText, String format, Locale locale) throws ParseException {
+        SimpleDateFormat formatter = new SimpleDateFormat(format, locale);
+        Date date = formatter.parse(dateText);
+        mCalendar = Calendar.getInstance();
+        mCalendar.setTimeInMillis(date.getTime());
     }
 
     protected Moment(Parcel in) {
