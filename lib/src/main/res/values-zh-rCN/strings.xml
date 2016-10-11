@@ -6,4 +6,5 @@
     <string name="in_hours">%1$d小时</string>
     <string name="in_days">%1$d天</string>
     <string name="in_years">%1$d年</string>
+    <string name="last_year">去年</string>
 </resources>
