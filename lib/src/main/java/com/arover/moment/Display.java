@@ -101,9 +101,9 @@ public class Display {
     public String fromNow(Context context, Moment moment) {
         Calendar now = Calendar.getInstance();
         long secs = (now.getTimeInMillis() - moment.fields().timeInMillis()) / 1000;
-        if (secs < 0) {
+        if (secs <= 0) {
             Log.e(TAG, "this moment is after now");
-            return "";
+            return "--";
         } else if (secs < 15) {
             return context.getResources().getString(R.string.now);
         } else if (secs < 60) {

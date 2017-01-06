@@ -84,12 +84,13 @@ public class Editor {
      *
      * @param n    the amount to minus to the field
      * @param unit time field/unit.
+     *             @see MomentUnit
      */
     public Moment minus(int n, int unit) {
         if(n > 0){
             n = -n;
         }
-        set(-n, unit);
+        set(n, unit);
         return mMoment;
     }
 
@@ -126,7 +127,7 @@ public class Editor {
     }
 
     public Moment setDay(int day) {
-        if (day < 0 || day > 23)
+        if (day < 0 || day > 30)
             throw new InvalidParameterException("can't sec day to " + day);
 
         mCalendar.set(Calendar.DAY_OF_MONTH, day);

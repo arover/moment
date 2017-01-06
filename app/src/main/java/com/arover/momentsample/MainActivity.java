@@ -5,7 +5,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.arover.moment.Display;
+import com.arover.moment.Lunar;
 import com.arover.moment.Moment;
+import com.arover.moment.MomentUnit;
+import com.arover.moment.Query;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,20 +24,33 @@ public class MainActivity extends AppCompatActivity {
 //        moment.edit().setDay(19);
 
         Moment m1 = new Moment();
-        m1.edit().setDay(21);
+        m1 = m1.edit().minus(2, MomentUnit.DAY);
+        builder.append("Display: m1 formatIso8601 = ").append(m1.display().formatIso8601()).append('\n');
+        Display display = moment.display();
 
-        builder.append("Display: time from now=").append(moment.display().fromNow(this, m1)).append('\n');
-        builder.append("Display: date=").append(moment.display().date()).append('\n');
-        builder.append("Display: dateIso=").append(moment.display().dateIso()).append('\n');
-        builder.append("Display: formatIso8601=").append(moment.display().formatIso8601()).append('\n');
-        builder.append("Display: shortestDate=").append(moment.display().shortestDate()).append('\n');
-        builder.append("Display: simpleTime=").append(moment.display().simpleTime()).append('\n');
-        builder.append("Display: time=").append(moment.display().time()).append('\n');
+        builder.append("Display: time from now = ").append(display.fromNow(this, m1)).append('\n');
+        builder.append("Display: date = ").append(display.date()).append('\n');
+        builder.append("Display: dateIso = ").append(display.dateIso()).append('\n');
+        builder.append("Display: formatIso8601 = ").append(display.formatIso8601()).append('\n');
+        builder.append("Display: shortestDate = ").append(display.shortestDate()).append('\n');
+        builder.append("Display: simpleTime = ").append(display.simpleTime()).append('\n');
+        builder.append("Display: time = ").append(display.time()).append('\n');
 
+        Query query = moment.query();
 
-        builder.append("Query: is leap year=").append(moment.query().isLeapYear()).append('\n');
-        builder.append("Query: last monday=").append(moment.query().lastMonday()).append('\n');
-        builder.append("Query: first day of month=").append(moment.query().firstDayOfMonth()).append('\n');
+        builder.append("Query: is leap year = ").append(query.isLeapYear()).append('\n');
+        builder.append("Query: last monday = ").append(query.lastMonday()).append('\n');
+        builder.append("Query: first day of month = ").append(query.firstDayOfMonth()).append('\n');
+
+        Lunar lunar = moment.getLunar();
+
+        builder.append("Chinese Lunar: ")
+                .append(lunar.getLunarYear())
+                .append("年")
+                .append(lunar.getLunarMonth())
+                .append("月")
+                .append(lunar.getLunarDay())
+                .append('\n');
 
         TextView demoText = (TextView) findViewById(R.id.text);
         demoText.setText(builder.toString());
