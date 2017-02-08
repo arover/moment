@@ -14,13 +14,19 @@ public class Display {
     private static final String TAG = "MomentFormat";
     private final Moment mMoment;
 
+    /**
+     * display action
+     *
+     * @param moment moment to display
+     */
     public Display(Moment moment) {
         mMoment = moment;
     }
 
     /**
-     * yyyy-MM-dd HH:mm:ss
-     * @return "2014-09-0808:02:17-0500"
+     * default format: yyyy-MM-dd HH:mm:ss ,eg: 2014-09-0808:02:17-0500
+     *
+     * @return formatted date text
      */
     public String format() {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
@@ -28,8 +34,9 @@ public class Display {
     }
 
     /**
+     * format date with format "M/d",eg: 9/2
      *
-     * @return date formatted: M/d
+     * @return M/d "9/2"
      */
     public String shortestDate() {
         SimpleDateFormat format = new SimpleDateFormat("M/d", Locale.getDefault());
@@ -37,8 +44,9 @@ public class Display {
     }
 
     /**
+     * format date with format "MMM d",eg: Sep 2
      *
-     * @return date formatted: MMM d
+     * @return "M/d" format date
      */
     public String date() {
         SimpleDateFormat format = new SimpleDateFormat("MMM d", Locale.getDefault());
@@ -46,8 +54,9 @@ public class Display {
     }
 
     /**
+     * format date with format "HH:mm",eg: 22:30
      *
-     * @return date formatted: HH:mm
+     * @return "HH:mm" format date
      */
     public String simpleTime() {
         SimpleDateFormat format = new SimpleDateFormat("HH:mm", Locale.getDefault());
@@ -56,8 +65,9 @@ public class Display {
 
 
     /**
+     * format date with format "yyyy-MM-dd'T'HH:mm:ssZ",eg: 2016-09-02T22:30:20:202+0800
      *
-     * @return date formatted: yyyy-MM-dd'T'HH:mm:ssZ
+     * @return formatted date
      */
     public String formatIso8601() {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale
@@ -66,8 +76,9 @@ public class Display {
     }
 
     /**
+     * format date with format "HH:mm:ss",eg: 22:30:20
      *
-     * @return date formatted: HH:mm:ss
+     * @return formatted date
      */
     public String time() {
         SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
@@ -75,35 +86,51 @@ public class Display {
     }
 
     /**
+     * format date with format "yyyy-MM-dd",eg: 2016-09-02
      *
-     * @return date formatted: yyyy-MM-dd
+     * @return formatted date
      */
     public String dateIso() {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         return format.format(mMoment.getDate());
     }
 
-    public String date(String format) {
-        SimpleDateFormat formatter = new SimpleDateFormat(format, Locale.getDefault());
-        return formatter.format(mMoment.getDate());
-    }
-
+    /**
+     * format date with specific format
+     *
+     * @param dateFormat date format string
+     * @return formatted date
+     */
     public String format(String dateFormat) {
         SimpleDateFormat format = new SimpleDateFormat(dateFormat, Locale.getDefault());
         return format.format(mMoment.getDate());
     }
 
+
+    /**
+     * format date with specific format and locale
+     *
+     * @param dateFormat date format string
+     * @return formatted date
+     */
     public String format(String dateFormat, Locale locale) {
         SimpleDateFormat format = new SimpleDateFormat(dateFormat, locale);
         return format.format(mMoment.getDate());
     }
 
+    /**
+     * A common way of displaying time
+     *
+     * @param context context for load string resource
+     * @param moment  moment to compare with
+     * @return timeago or relative time.
+     */
     public String fromNow(Context context, Moment moment) {
         Calendar now = Calendar.getInstance();
         long secs = (now.getTimeInMillis() - moment.fields().timeInMillis()) / 1000;
-        if (secs <= 0) {
+        if (secs < 0) {
             Log.e(TAG, "this moment is after now");
-            return "--";
+            return "";
         } else if (secs < 15) {
             return context.getResources().getString(R.string.now);
         } else if (secs < 60) {
@@ -114,29 +141,31 @@ public class Display {
             return context.getResources().getString(R.string.in_hours, secs / 3600);
         } else if (now.get(Calendar.YEAR) == moment.getCalendar().get(Calendar.YEAR) &&
                 now.get(Calendar.MONTH) == moment.getCalendar().get(Calendar.MONTH) &&
-                now.get(Calendar.WEEK_OF_MONTH) == moment.getCalendar().get(Calendar
-                        .WEEK_OF_MONTH)) {
-            //Tue 12:30
-            SimpleDateFormat formatter = new SimpleDateFormat("EEE HH:mm", Locale.getDefault());
+                now.get(Calendar.WEEK_OF_MONTH) == moment.getCalendar().get(Calendar.WEEK_OF_MONTH)) {
+
+            SimpleDateFormat formatter = new SimpleDateFormat("EEEHH:mm", Locale.getDefault());
             return formatter.format(moment.getDate());
         } else if (secs < 24 * 3600 * 30) {
             return context.getResources().getString(R.string.in_days, secs / 24 / 3600);
         } else if (now.get(Calendar.MONTH) - moment.fields().month().ordinal() > 0) {
             SimpleDateFormat formatter = new SimpleDateFormat("MMM", Locale.getDefault());
             return formatter.format(moment.getDate());
-        } else if (now.get(Calendar.YEAR) - moment.fields().year() == 1) {
-            return context.getResources().getString(R.string.last_year);
+        } else if (now.get(Calendar.YEAR) - moment.fields().year() > 0) {
+            return context.getResources().getString(R.string.in_years, now.get(Calendar.YEAR) - moment.fields().year());
         } else {
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy", Locale.getDefault());
-            return formatter.format(moment.getDate());
+            return "";
         }
     }
 
+    /**
+     * @param context for string resource
+     * @see #fromNow(Context, Moment)
+     */
     public String fromNow(Context context) {
         return fromNow(context, mMoment);
     }
 
-    public long milliseconds() {
+    public long milliseconds(){
         return mMoment.getCalendar().getTimeInMillis();
     }
 }

@@ -13,6 +13,11 @@ public class Editor {
     private Moment mMoment;
     private Calendar mCalendar;
 
+    /**
+     * construct a moment editor
+     *
+     * @param moment for edit
+     */
     public Editor(Moment moment) {
         mMoment = moment;
         mCalendar = moment.getCalendar();
@@ -66,14 +71,13 @@ public class Editor {
     }
 
     /**
-     *
-     * @param n the amount to add.
-     *          negative number will be transforming to positive.
+     * @param n    the amount to add.
+     *             negative number will be transforming to positive.
      * @param unit time unit.
      * @return Editor for chain
      */
     public Editor add(int n, int unit) {
-        if(n < 0){
+        if (n < 0) {
             n = Math.abs(n);
         }
         set(n, unit);
@@ -89,10 +93,10 @@ public class Editor {
      * @return Editor for chain
      */
     public Editor minus(int n, int unit) {
-        if(n > 0){
-            n = -n;
+        if (n < 0) {
+            n = Math.abs(n);
         }
-        set(n, unit);
+        set(-n, unit);
         return this;
     }
 
@@ -101,9 +105,9 @@ public class Editor {
      * @param timeInMillis time in milliseconds
      * @return Editor for chain
      */
-    public Editor setMillisecond(long timeInMillis) {
+    public Editor timeInMillis(long timeInMillis) {
         if (timeInMillis < 0)
-            throw new InvalidParameterException("can't millisecond to " + timeInMillis);
+            throw new InvalidParameterException("can't time in millisecond: " + timeInMillis);
 
         mCalendar.setTimeInMillis(timeInMillis);
         return this;
@@ -121,12 +125,21 @@ public class Editor {
         return this;
     }
 
+    public Editor timeInSeconds(int timeInSeconds) {
+        if (timeInSeconds < 0)
+            throw new InvalidParameterException("can't time in seconds: " + timeInSeconds);
+
+        mCalendar.setTimeInMillis(timeInSeconds * 1000);
+        return this;
+    }
+
     /**
+     * set the minute of the time
      *
-     * @param min minute [0,59]
-     * @return Editor for chain
+     * @param min minute , [0,59]
+     * @return editor for chain
      */
-    public Editor setMinute(int min) {
+    public Editor minute(int min) {
         if (min < 0 || min > 59)
             throw new InvalidParameterException("can't sec minute to " + min);
         mCalendar.set(Calendar.MINUTE, min);
@@ -134,10 +147,12 @@ public class Editor {
     }
 
     /**
+     * set the hour of day
+     *
      * @param hour [0,23]
-     * @return Editor for chain
+     * @return editor for chain
      */
-    public Editor setHour(int hour) {
+    public Editor hour(int hour) {
         if (hour < 0 || hour > 23)
             throw new InvalidParameterException("can't sec hour to " + hour);
         mCalendar.set(Calendar.HOUR_OF_DAY, hour);
@@ -145,25 +160,27 @@ public class Editor {
     }
 
     /**
+     * set the day of month
      *
-     * @param day day of month
-     * @return Editor for chain
+     * @param day [1,31]
+     * @return editor for chain
      */
-    public Editor setDay(int day) {
+    public Editor day(int day) {
         if (day < 1 || day > 31)
-            throw new InvalidParameterException("can't sec day to " + day);
+            throw new InvalidParameterException("can't set day to " + day);
 
         mCalendar.set(Calendar.DAY_OF_MONTH, day);
         return this;
     }
 
     /**
+     * set the day of year
      *
-     * @param day day of year
-     * @return Editor for chain
+     * @param day [1,366]
+     * @return editor for chain
      */
-    public Editor setDayOfYear(int day) {
-        if (day < 1 || day > 366)
+    public Editor dayOfYear(int day) {
+            if (day < 1 || day > 366)
             throw new InvalidParameterException("can't sec day to " + day);
 
         mCalendar.set(Calendar.DAY_OF_YEAR, day);
@@ -171,26 +188,28 @@ public class Editor {
     }
 
     /**
+     * set month of moment
      *
-     * @param month month
-     * @return Editor for chain
+     * @return editor for chain
      */
-    public Editor setMonth(Month month) {
+    public Editor month(Month month) {
         mCalendar.set(Calendar.MONTH, month.ordinal());
         return this;
     }
 
     /**
+     * set month of moment
+     *
      * @param month [Calendar.JANUARY,Calendar.DECEMBER]
-     * @return Editor for chain
+     *              0-11
      */
-    public Editor setMonth(int month) {
+    public Editor month(int month) {
         mCalendar.set(Calendar.MONTH, month);
         return this;
     }
 
     /**
-     * @return Editor for chain
+     * set time to the beginning of the day(00:00:00).
      */
     public Editor setBeginningOfDay() {
         Util.setTimeToBeginningOfDay(mCalendar);
@@ -198,15 +217,23 @@ public class Editor {
     }
 
     /**
-     * @return Editor for chain
+     * set time to the beginning of the day(23:59:59).
+     *
+     * @return editor for chain
      */
     public Editor setEndOfDay() {
         Util.setTimeToEndOfDay(mCalendar);
         return this;
     }
 
-    public Editor setYear(int year) {
-        mCalendar.set(Calendar.YEAR,year);
+    /**
+     * change the year
+     *
+     * @param year [0,...]
+     * @return editor for chain
+     */
+    public Editor year(int year) {
+        mCalendar.set(Calendar.YEAR, year);
         return this;
     }
 

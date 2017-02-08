@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         StringBuilder builder = new StringBuilder();
         Moment moment = new Moment();
+
 //        moment.edit().setDay(19);
 
         Moment twoDaysAndTwoHoursBefore = new Moment().edit()
@@ -28,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
                 .minus(2, MomentUnit.DAY)
                 .getMoment();
 
-        moment.display().milliseconds();
+//        moment.display().milliseconds();
         builder.append("Display: two days and two hours before: ").append(twoDaysAndTwoHoursBefore.toString()).append('\n');
         Display display = moment.display();
 
