@@ -135,4 +135,8 @@ public class Display {
     public String fromNow(Context context) {
         return fromNow(context, mMoment);
     }
+
+    public long milliseconds() {
+        return mMoment.getCalendar().getTimeInMillis();
+    }
 }

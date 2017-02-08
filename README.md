@@ -10,6 +10,7 @@ moment implemented Parcelable and Serializable interface.
     moment.query().isBefore(othermoment);
     moment.query().lastMonday(); // the latest monday of this moment.
     moment.query().firstDayOfMonth(); // the first day of month of this moment.
+    moment.query().isLeapYear();// false if  current year is not leap year
 
     // Field
     // get some field
@@ -18,10 +19,10 @@ moment implemented Parcelable and Serializable interface.
     // ....
 
     // Edit
-    // change moment time
+    // manipulate moment,edit will change moment itself.
     moment.edit().setMinute(23);
     moment.edit().setHour(14);
-
+    moment.edit().minus(2, MomentUnit.DAY);
     // Display
     // show moment as string.
     moment.display().format();

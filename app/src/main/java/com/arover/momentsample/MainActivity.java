@@ -23,12 +23,16 @@ public class MainActivity extends AppCompatActivity {
         Moment moment = new Moment();
 //        moment.edit().setDay(19);
 
-        Moment m1 = new Moment();
-        m1 = m1.edit().minus(2, MomentUnit.DAY);
-        builder.append("Display: m1 formatIso8601 = ").append(m1.display().formatIso8601()).append('\n');
+        Moment twoDaysAndTwoHoursBefore = new Moment().edit()
+                .minus(2, MomentUnit.HOUR)
+                .minus(2, MomentUnit.DAY)
+                .getMoment();
+
+        moment.display().milliseconds();
+        builder.append("Display: two days and two hours before: ").append(twoDaysAndTwoHoursBefore.toString()).append('\n');
         Display display = moment.display();
 
-        builder.append("Display: time from now = ").append(display.fromNow(this, m1)).append('\n');
+        builder.append("Display: time from now = ").append(display.fromNow(this, twoDaysAndTwoHoursBefore)).append('\n');
         builder.append("Display: date = ").append(display.date()).append('\n');
         builder.append("Display: dateIso = ").append(display.dateIso()).append('\n');
         builder.append("Display: formatIso8601 = ").append(display.formatIso8601()).append('\n');

@@ -7,7 +7,7 @@ android {
     defaultConfig {
         applicationId "com.arover.momentsample"
         minSdkVersion 15
-        targetSdkVersion 23
+        targetSdkVersion 17
         versionCode 1
         versionName "1.0"
     }
