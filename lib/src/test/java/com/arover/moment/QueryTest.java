@@ -24,7 +24,7 @@ public class QueryTest {
     public void firstDayOfMonth() throws Exception {
         Moment moment = new Moment(2016, Month.AUGUST, 30);
         Moment day1 = moment.query().firstDayOfMonth();
-        assertEquals(8, day1.fields().month().getNumber());
+        assertEquals(8, day1.fields().month().number());
         assertEquals(1, day1.fields().day());
     }
 }
