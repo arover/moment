@@ -72,7 +72,7 @@ public class Moment implements Parcelable, Serializable{
 
     protected Moment(Parcel in) {
         mCalendar = Calendar.getInstance();
-        mCalendar.setTimeInMillis(in.readInt());
+        mCalendar.setTimeInMillis(in.readLong());
     }
 
     public static final Creator<Moment> CREATOR = new Creator<Moment>() {
