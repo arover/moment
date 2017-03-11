@@ -38,12 +38,22 @@ public class Moment implements Parcelable, Serializable {
     private final Calendar mCalendar;
 
     /**
-     * construct a moment using the specific calendar instance.
+     * construct a moment by calendar.
      *
      * @param calendar specific the time
      */
     public Moment(final Calendar calendar) {
         mCalendar = calendar;
+    }
+
+    /**
+     * construct a moment by date.
+     *
+     * @param date date
+     */
+    public Moment(final Date date) {
+        mCalendar = Calendar.getInstance();
+        mCalendar.setTimeInMillis(date.getTime());
     }
 
     /**
@@ -79,7 +89,7 @@ public class Moment implements Parcelable, Serializable {
     }
 
     /**
-     * construct a moment with time in millisecond.
+     * construct a moment by time in millisecond.
      *
      * @param timeInMillis time in millisecond
      */
@@ -89,7 +99,7 @@ public class Moment implements Parcelable, Serializable {
     }
 
     /**
-     * construct a moment with time in seconds.
+     * construct a moment by time in seconds.
      *
      * @param timeInSeconds time in seconds
      */
