@@ -228,4 +228,12 @@ public class Moment implements Parcelable, Serializable {
     public String toString() {
         return new Display(this).formatIso8601();
     }
+
+    /**
+     *
+     * @return time from now in seconds.
+     */
+    public long timeFromNowInSeconds(){
+        return (new Date().getTime() - mCalendar.getTimeInMillis())/1000;
+    }
 }
