@@ -133,6 +133,13 @@ public class Editor {
         return this;
     }
 
+    public Editor second(int sec) {
+        if (sec < 0 || sec > 59)
+            throw new InvalidParameterException("can't sec second to " + sec);
+        mCalendar.set(Calendar.SECOND, sec);
+        return this;
+    }
+
     /**
      * set the minute of the time
      *
@@ -241,7 +248,7 @@ public class Editor {
      *
      * @return edit moment
      */
-    public Moment getMoment() {
+    public Moment moment() {
         return mMoment;
     }
 }

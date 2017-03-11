@@ -2,7 +2,6 @@ package com.arover.momentsample;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.TextView;
 
 import com.arover.moment.Display;
@@ -27,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         Moment twoDaysAndTwoHoursBefore = new Moment().edit()
                 .minus(2, MomentUnit.HOUR)
                 .minus(2, MomentUnit.DAY)
-                .getMoment();
+                .moment();
 
 //        moment.display().milliseconds();
         builder.append("Display: two days and two hours before: ").append(twoDaysAndTwoHoursBefore.toString()).append('\n');
