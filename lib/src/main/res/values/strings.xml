@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">Moment</string>
 
     <string name="now">now</string>
     <string name="in_secs">%1$dsec</string>

@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">Moment</string>
     <string name="now">刚刚</string>
     <string name="in_secs">%1$d秒</string>
     <string name="in_mins">%1$d分</string>
