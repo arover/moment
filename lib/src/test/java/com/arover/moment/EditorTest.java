@@ -15,7 +15,7 @@ public class EditorTest {
 
     @Before
     public void setup() {
-        mMoment = new Moment();
+        mMoment = new Moment(2017,Month.MARCH,11);
     }
 
     @Test
@@ -47,5 +47,17 @@ public class EditorTest {
     @Test
     public void setSecond() throws Exception {
         assertEquals(55, mMoment.edit().second(55).moment().fields().second());
+    }
+
+    @Test
+    public void minus() throws Exception {
+
+        assertEquals(10, mMoment.edit().minus(1,MomentUnit.DAY).moment().fields().day());
+        assertEquals(Month.FEBRUARY, mMoment.edit().minus(1,MomentUnit.MONTH).moment().fields().month());
+
+        assertEquals(1, mMoment.edit().add(1,MomentUnit.HOUR).moment().fields().hour());
+        assertEquals(2, mMoment.edit().add(2,MomentUnit.MINUTE).moment().fields().minute());
+        assertEquals(5, mMoment.edit().add(5,MomentUnit.SECOND).moment().fields().second());
+        assertEquals(2018, mMoment.edit().add(1,MomentUnit.YEAR).moment().fields().year());
     }
 }
