@@ -1,10 +1,10 @@
 # Moment
 Parse, validate, manipulate, and display dates in android. Inspired by momentjs.
 ## Usage
-```java
+```
     Moment moment = new Moment()   // create a moment with default calendar instance.
     moment.toString() //"2016-08-29T08:02:17+08:00" (ISO 8601)
-    
+
     // Edit
     // change moment time
     moment.edit().minute(23).hour(14);
@@ -23,14 +23,12 @@ Parse, validate, manipulate, and display dates in android. Inspired by momentjs.
     moment.fields().month(); // => 7
     // ....
 
-<<<<<<< HEAD
     // Edit
     // manipulate moment,edit will change moment itself.
     moment.edit().setMinute(23);
     moment.edit().setHour(14);
     moment.edit().minus(2, MomentUnit.DAY);
-=======
->>>>>>> origin/master
+
     // Display
     // show moment as string.
     moment.display().format();
