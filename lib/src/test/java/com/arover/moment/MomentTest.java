@@ -13,7 +13,7 @@ public class MomentTest {
     @Test
     public void parse() throws Exception{
         Moment moment = new Moment("2016-09-02","yyyy-MM-dd");
-        assertEquals(9, moment.fields().month().number());
+        assertEquals(Moment.SEPTEMBER, moment.fields().month());
         assertEquals(2, moment.fields().day());
         assertEquals(2016, moment.fields().year());
     }

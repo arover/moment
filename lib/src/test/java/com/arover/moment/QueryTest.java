@@ -22,9 +22,9 @@ public class QueryTest {
 
     @Test
     public void firstDayOfMonth() throws Exception {
-        Moment moment = new Moment(2016, Month.AUGUST, 30);
+        Moment moment = new Moment(2016, Moment.AUGUST, 30);
         Moment day1 = moment.query().firstDayOfMonth();
-        assertEquals(8, day1.fields().month().number());
+        assertEquals(Moment.AUGUST, day1.fields().month());
         assertEquals(1, day1.fields().day());
     }
 }

@@ -1,8 +1,10 @@
 package com.arover.moment;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
+import java.security.InvalidParameterException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -101,9 +103,14 @@ public class Display {
      * @param dateFormat date format string
      * @return formatted date
      */
-    public String format(String dateFormat) {
-        SimpleDateFormat format = new SimpleDateFormat(dateFormat, Locale.getDefault());
-        return format.format(mMoment.getDate());
+    public String format(@NonNull String dateFormat) {
+        try {
+            SimpleDateFormat format = new SimpleDateFormat(dateFormat, Locale.getDefault());
+            return format.format(mMoment.getDate());
+        }catch (Exception e){
+            Log.e(TAG,"format date erro"+dateFormat,e);
+            throw new InvalidParameterException("invalid date format:"+dateFormat);
+        }
     }
 
 
@@ -147,7 +154,7 @@ public class Display {
             return formatter.format(moment.getDate());
         } else if (secs < 24 * 3600 * 30) {
             return context.getResources().getString(R.string.in_days, secs / 24 / 3600);
-        } else if (now.get(Calendar.MONTH) - moment.fields().month().ordinal() > 0) {
+        } else if (now.get(Calendar.MONTH) - moment.fields().month()> 0) {
             SimpleDateFormat formatter = new SimpleDateFormat("MMM", Locale.getDefault());
             return formatter.format(moment.getDate());
         } else if (now.get(Calendar.YEAR) - moment.fields().year() > 0) {

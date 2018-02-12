@@ -25,8 +25,7 @@ public class FieldsTest {
 
     @Test
     public void month() throws Exception {
-        assertEquals(8, mMoment.fields().month().number());
-        assertEquals(7, mMoment.fields().month().index());
+        assertEquals(7, mMoment.fields().month());
     }
 
     @Test

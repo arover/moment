@@ -51,8 +51,8 @@ public class Field {
         return mCalendar.get(Calendar.DAY_OF_MONTH);
     }
 
-    public Month month() {
-        return Month.from(mCalendar.get(Calendar.MONTH));
+    public @Moment.Month int month() {
+        return mCalendar.get(Calendar.MONTH);
     }
 
     /**

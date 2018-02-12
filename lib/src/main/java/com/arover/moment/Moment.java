@@ -2,8 +2,13 @@ package com.arover.moment;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.os.SystemClock;
+import android.support.annotation.IntDef;
+import android.support.annotation.IntRange;
 
 import java.io.Serializable;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -11,11 +16,30 @@ import java.util.Date;
 import java.util.Locale;
 
 /**
- * a date time class inspired by momentjs.
+ * a date time utility inspired by Momentjs.
  *
  * @author arover
  */
 public class Moment implements Parcelable, Serializable {
+
+
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({JANUARY, FEBRUARY, MARCH, APRIL, MAY, JUNE, JULY, AUGUST,
+            SEPTEMBER, OCTOBER, NOVEMBER, DECEMBER})
+    public @interface Month {}
+
+    public static final int JANUARY = 0;
+    public static final int FEBRUARY = 1;
+    public static final int MARCH = 2;
+    public static final int APRIL = 3;
+    public static final int MAY = 4;
+    public static final int JUNE = 5;
+    public static final int JULY = 6;
+    public static final int AUGUST = 7;
+    public static final int SEPTEMBER = 8;
+    public static final int OCTOBER = 9;
+    public static final int NOVEMBER = 10;
+    public static final int DECEMBER = 11;
 
     /**
      * parcelable methods.
@@ -35,7 +59,7 @@ public class Moment implements Parcelable, Serializable {
     /**
      * calendar object to storage time.
      */
-    private final Calendar mCalendar;
+    private final Calendar calendar;
 
     /**
      * construct a moment by calendar.
@@ -43,7 +67,7 @@ public class Moment implements Parcelable, Serializable {
      * @param calendar specific the time
      */
     public Moment(final Calendar calendar) {
-        mCalendar = calendar;
+        this.calendar = calendar;
     }
 
     /**
@@ -52,40 +76,31 @@ public class Moment implements Parcelable, Serializable {
      * @param date date
      */
     public Moment(final Date date) {
-        mCalendar = Calendar.getInstance();
-        mCalendar.setTimeInMillis(date.getTime());
+        calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(date.getTime());
     }
 
     /**
      * construct a moment using the default calendar instance.
      */
     public Moment() {
-        mCalendar = Calendar.getInstance();
+        calendar = Calendar.getInstance();
     }
 
     /**
      * construct a moment using specified year, month, day.
      *
-     * @param year  the year minus 1900.
+     * @param year  the minimum year is 1900.
      * @param month the month between 0-11.
      * @param day   the day of the month between 1-31.
      */
-    public Moment(final int year, final int month, final int day) {
-        mCalendar = Calendar.getInstance();
-        mCalendar.set(year, month, day);
-        Util.setTimeToBeginningOfDay(mCalendar);
-    }
-
-    /**
-     *
-     * @param year  the year minus 1900.
-     * @param month Month enum, JANUARY - DECEMBER
-     * @param day   the day of the month between 1-31.
-     */
-    public Moment(final int year, final Month month, final int day) {
-        mCalendar = Calendar.getInstance();
-        mCalendar.set(year, month.index(), day);
-        Util.setTimeToBeginningOfDay(mCalendar);
+    public Moment(final int year, @IntRange(from=0, to=11) final int month,
+                  @IntRange(from=1, to=31)
+    final int
+            day) {
+        calendar = Calendar.getInstance();
+        calendar.set(year, month, day);
+        Util.setTimeToBeginningOfDay(calendar);
     }
 
     /**
@@ -94,8 +109,8 @@ public class Moment implements Parcelable, Serializable {
      * @param timeInMillis time in millisecond
      */
     public Moment(final long timeInMillis) {
-        mCalendar = Calendar.getInstance();
-        mCalendar.setTimeInMillis(timeInMillis);
+        calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(timeInMillis);
     }
 
     /**
@@ -104,8 +119,8 @@ public class Moment implements Parcelable, Serializable {
      * @param timeInSeconds time in seconds
      */
     public Moment(final int timeInSeconds) {
-        mCalendar = Calendar.getInstance();
-        mCalendar.setTimeInMillis(timeInSeconds * 1000);
+        calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(timeInSeconds * 1000);
     }
 
     /**
@@ -117,8 +132,8 @@ public class Moment implements Parcelable, Serializable {
     public Moment(final String dateText, final String format) throws ParseException {
         SimpleDateFormat formatter = new SimpleDateFormat(format, Locale.getDefault());
         Date date = formatter.parse(dateText);
-        mCalendar = Calendar.getInstance();
-        mCalendar.setTimeInMillis(date.getTime());
+        calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(date.getTime());
     }
 
     /**
@@ -133,8 +148,26 @@ public class Moment implements Parcelable, Serializable {
 
         SimpleDateFormat formatter = new SimpleDateFormat(format, locale);
         Date date = formatter.parse(dateText);
-        mCalendar = Calendar.getInstance();
-        mCalendar.setTimeInMillis(date.getTime());
+        calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(date.getTime());
+    }
+
+    /**
+     * Returns milliseconds since boot, including time spent in sleep.
+     *
+     * @return elapsed milliseconds since boot.
+     */
+    public long getElapsedRealtimeInMs(){
+        return SystemClock.elapsedRealtime();
+    }
+
+    /**
+     * Returns nanoseconds since boot, including time spent in sleep.
+     *
+     * @return elapsed nanoseconds since boot.
+     */
+    public long getElapsedRealtimeInNanos(){
+        return SystemClock.elapsedRealtimeNanos();
     }
 
     /**
@@ -142,22 +175,22 @@ public class Moment implements Parcelable, Serializable {
      * @param in parcel
      */
     protected Moment(final Parcel in) {
-        mCalendar = Calendar.getInstance();
-        mCalendar.setTimeInMillis(in.readInt());
+        calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(in.readInt());
     }
 
     /**
      * @return a {@code Calendar} object of this moment
      */
     public Calendar getCalendar() {
-        return mCalendar;
+        return calendar;
     }
 
     /**
      * @return a date object of this moment
      */
     public Date getDate() {
-        return new Date(mCalendar.getTimeInMillis());
+        return new Date(calendar.getTimeInMillis());
     }
 
     /**
@@ -165,7 +198,7 @@ public class Moment implements Parcelable, Serializable {
      * @return chinese lunar calendar
      */
     public Lunar getLunar(){
-        return new Lunar(mCalendar.getTimeInMillis());
+        return new Lunar(calendar.getTimeInMillis());
     }
     /**
      *
@@ -200,7 +233,7 @@ public class Moment implements Parcelable, Serializable {
      * @return a copy of this moment.
      */
     public Moment copy() {
-        return new Moment(mCalendar.getTimeInMillis());
+        return new Moment(calendar.getTimeInMillis());
     }
 
     /**
@@ -218,7 +251,7 @@ public class Moment implements Parcelable, Serializable {
 
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
-        dest.writeLong(mCalendar.getTimeInMillis());
+        dest.writeLong(calendar.getTimeInMillis());
     }
 
     /**
@@ -234,6 +267,6 @@ public class Moment implements Parcelable, Serializable {
      * @return time from now in seconds.
      */
     public long timeFromNowInSeconds(){
-        return (new Date().getTime() - mCalendar.getTimeInMillis())/1000;
+        return (new Date().getTime() - calendar.getTimeInMillis())/1000;
     }
 }
