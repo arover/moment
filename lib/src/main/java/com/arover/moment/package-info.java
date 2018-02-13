@@ -2,6 +2,6 @@
  * Moment is a date time class inspired by momentjs.
  *
  * @author arover
- * @version 0.1.27
+ * @version 1.5.0
  */
 package com.arover.moment;

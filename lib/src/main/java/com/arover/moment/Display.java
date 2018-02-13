@@ -14,7 +14,7 @@ import java.util.Locale;
  */
 public class Display {
     private static final String TAG = "MomentFormat";
-    private final Moment mMoment;
+    private final Moment moment;
 
     /**
      * display action
@@ -22,7 +22,7 @@ public class Display {
      * @param moment moment to display
      */
     public Display(Moment moment) {
-        mMoment = moment;
+        this.moment = moment;
     }
 
     /**
@@ -32,17 +32,17 @@ public class Display {
      */
     public String format() {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-        return format.format(mMoment.getDate());
+        return format.format(moment.getDate());
     }
 
     /**
-     * format date with format "M/d",eg: 9/2
+     * format date with format "M/d",eg: Sep 2 will be formatted to 9/2.
      *
      * @return M/d "9/2"
      */
     public String shortestDate() {
         SimpleDateFormat format = new SimpleDateFormat("M/d", Locale.getDefault());
-        return format.format(mMoment.getDate());
+        return format.format(moment.getDate());
     }
 
     /**
@@ -52,7 +52,7 @@ public class Display {
      */
     public String date() {
         SimpleDateFormat format = new SimpleDateFormat("MMM d", Locale.getDefault());
-        return format.format(mMoment.getDate());
+        return format.format(moment.getDate());
     }
 
     /**
@@ -62,7 +62,7 @@ public class Display {
      */
     public String simpleTime() {
         SimpleDateFormat format = new SimpleDateFormat("HH:mm", Locale.getDefault());
-        return format.format(mMoment.getDate());
+        return format.format(moment.getDate());
     }
 
 
@@ -74,7 +74,7 @@ public class Display {
     public String formatIso8601() {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale
                 .getDefault());
-        return format.format(mMoment.getDate());
+        return format.format(moment.getDate());
     }
 
     /**
@@ -84,7 +84,7 @@ public class Display {
      */
     public String time() {
         SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
-        return format.format(mMoment.getDate());
+        return format.format(moment.getDate());
     }
 
     /**
@@ -94,7 +94,7 @@ public class Display {
      */
     public String dateIso() {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-        return format.format(mMoment.getDate());
+        return format.format(moment.getDate());
     }
 
     /**
@@ -106,10 +106,10 @@ public class Display {
     public String format(@NonNull String dateFormat) {
         try {
             SimpleDateFormat format = new SimpleDateFormat(dateFormat, Locale.getDefault());
-            return format.format(mMoment.getDate());
-        }catch (Exception e){
-            Log.e(TAG,"format date erro"+dateFormat,e);
-            throw new InvalidParameterException("invalid date format:"+dateFormat);
+            return format.format(moment.getDate());
+        } catch (Exception e) {
+            Log.e(TAG, "format date error:" + dateFormat, e);
+            throw new InvalidParameterException("invalid date format:" + dateFormat);
         }
     }
 
@@ -122,7 +122,7 @@ public class Display {
      */
     public String format(String dateFormat, Locale locale) {
         SimpleDateFormat format = new SimpleDateFormat(dateFormat, locale);
-        return format.format(mMoment.getDate());
+        return format.format(moment.getDate());
     }
 
     /**
@@ -148,17 +148,19 @@ public class Display {
             return context.getResources().getString(R.string.in_hours, secs / 3600);
         } else if (now.get(Calendar.YEAR) == moment.getCalendar().get(Calendar.YEAR) &&
                 now.get(Calendar.MONTH) == moment.getCalendar().get(Calendar.MONTH) &&
-                now.get(Calendar.WEEK_OF_MONTH) == moment.getCalendar().get(Calendar.WEEK_OF_MONTH)) {
+                now.get(Calendar.WEEK_OF_MONTH) == moment.getCalendar()
+                        .get(Calendar.WEEK_OF_MONTH)) {
 
             SimpleDateFormat formatter = new SimpleDateFormat("EEEHH:mm", Locale.getDefault());
             return formatter.format(moment.getDate());
         } else if (secs < 24 * 3600 * 30) {
             return context.getResources().getString(R.string.in_days, secs / 24 / 3600);
-        } else if (now.get(Calendar.MONTH) - moment.fields().month()> 0) {
+        } else if (now.get(Calendar.MONTH) - moment.fields().month() > 0) {
             SimpleDateFormat formatter = new SimpleDateFormat("MMM", Locale.getDefault());
             return formatter.format(moment.getDate());
         } else if (now.get(Calendar.YEAR) - moment.fields().year() > 0) {
-            return context.getResources().getString(R.string.in_years, now.get(Calendar.YEAR) - moment.fields().year());
+            return context.getResources()
+                    .getString(R.string.in_years, now.get(Calendar.YEAR) - moment.fields().year());
         } else {
             return "";
         }
@@ -169,10 +171,10 @@ public class Display {
      * @see #fromNow(Context, Moment)
      */
     public String fromNow(Context context) {
-        return fromNow(context, mMoment);
+        return fromNow(context, moment);
     }
 
-    public long milliseconds(){
-        return mMoment.getCalendar().getTimeInMillis();
+    public long milliseconds() {
+        return moment.getCalendar().getTimeInMillis();
     }
 }

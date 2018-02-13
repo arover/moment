@@ -11,42 +11,42 @@ import static org.junit.Assert.*;
  */
 
 public class FieldsTest {
-    private Moment mMoment;
+    private Moment moment;
 
     @Before
     public void setup(){
-        mMoment = new Moment(2016, 7, 26);
+        moment = new Moment(2016, 7, 26);
     }
 
     @Test
     public void year() throws Exception {
-        assertEquals(2016, mMoment.fields().year());
+        assertEquals(2016, moment.fields().year());
     }
 
     @Test
     public void month() throws Exception {
-        assertEquals(7, mMoment.fields().month());
+        assertEquals(7, moment.fields().month());
     }
 
     @Test
     public void day() throws Exception {
-        assertEquals(26, mMoment.fields().day());
+        assertEquals(26, moment.fields().day());
     }
 
     @Test
     public void hour() throws Exception {
-        assertEquals(0, mMoment.fields().hour());
+        assertEquals(0, moment.fields().hour());
     }
 
 
     @Test
     public void min() throws Exception {
-        assertEquals(0, mMoment.fields().hour());
+        assertEquals(0, moment.fields().hour());
     }
 
     @Test
     public void second() throws Exception {
-        assertEquals(0, mMoment.fields().second());
+        assertEquals(0, moment.fields().second());
     }
 
 }

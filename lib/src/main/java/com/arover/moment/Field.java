@@ -7,8 +7,8 @@ import java.util.Calendar;
  */
 public class Field {
 
-    private Moment mMoment;
-    private Calendar mCalendar;
+    private Moment moment;
+    private Calendar calendar;
 
     /**
      * construct moment field getter.
@@ -16,54 +16,54 @@ public class Field {
      * @param moment
      */
     public Field(Moment moment) {
-        mCalendar = moment.getCalendar();
-        mMoment = moment;
+        calendar = moment.getCalendar();
+        this.moment = moment;
     }
 
     public long timeInSeconds() {
-        return mCalendar.getTimeInMillis() / 1000;
+        return calendar.getTimeInMillis() / 1000;
     }
 
     /**
      * @return time in millisecond
      */
     public long timeInMillis() {
-        return mCalendar.getTimeInMillis();
+        return calendar.getTimeInMillis();
     }
 
     public int millis() {
-        return mCalendar.get(Calendar.MILLISECOND);
+        return calendar.get(Calendar.MILLISECOND);
     }
 
     public int second() {
-        return mCalendar.get(Calendar.SECOND);
+        return calendar.get(Calendar.SECOND);
     }
 
     public int minute() {
-        return mCalendar.get(Calendar.MINUTE);
+        return calendar.get(Calendar.MINUTE);
     }
 
     public int hour() {
-        return mCalendar.get(Calendar.HOUR_OF_DAY);
+        return calendar.get(Calendar.HOUR_OF_DAY);
     }
 
     public int day() {
-        return mCalendar.get(Calendar.DAY_OF_MONTH);
+        return calendar.get(Calendar.DAY_OF_MONTH);
     }
 
     public @Moment.Month int month() {
-        return mCalendar.get(Calendar.MONTH);
+        return calendar.get(Calendar.MONTH);
     }
 
     /**
      * @return index of month , 0 - 11.
      */
     public int monthIndex() {
-        return mCalendar.get(Calendar.MONTH);
+        return calendar.get(Calendar.MONTH);
     }
 
     public int year() {
-        return mCalendar.get(Calendar.YEAR);
+        return calendar.get(Calendar.YEAR);
     }
 
 }

@@ -10,20 +10,20 @@ import java.util.Calendar;
  */
 public class Query {
     private static final String TAG = "Query";
-    static int[] sDaysOfMonth = new int[]{31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    static int[] daysOfMonth = new int[]{31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
-    private final Calendar mCalendar;
-    private Moment mMoment;
+    private final Calendar calendar;
+    private Moment moment;
 
     public Query(Moment moment) {
-        mMoment = moment;
-        mCalendar = moment.getCalendar();
+        this.moment = moment;
+        calendar = moment.getCalendar();
     }
 
     public Moment lastMonday() {
 
         Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(mCalendar.getTimeInMillis());
+        cal.setTimeInMillis(calendar.getTimeInMillis());
         int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
         int offset = ((Calendar.MONDAY - dayOfWeek) - 7) % 7;
         cal.add(Calendar.DAY_OF_MONTH, offset);
@@ -35,15 +35,11 @@ public class Query {
         if (month == Calendar.FEBRUARY && isLeapYear(year)) {
             return 29;
         }
-        return sDaysOfMonth[month];
-    }
-
-    public int daysOfMonth(int year, Month month) {
-        return daysOfMonth(year, month.index());
+        return daysOfMonth[month];
     }
 
     public boolean isLeapYear() {
-        int year = mMoment.fields().year();
+        int year = moment.fields().year();
         return isLeapYear(year);
     }
 
@@ -61,7 +57,7 @@ public class Query {
 
     public Moment firstDayOfMonth() {
         Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(mCalendar.getTimeInMillis());
+        cal.setTimeInMillis(calendar.getTimeInMillis());
         cal.set(Calendar.DAY_OF_MONTH, 1);
         Util.setTimeToBeginningOfDay(cal);
         return new Moment(cal);
@@ -78,35 +74,35 @@ public class Query {
     public boolean isSame(final int unit, final Moment moment) {
         switch (unit) {
             case MomentUnit.SECOND: {
-                long millis = mCalendar.getTimeInMillis() - moment.getCalendar().getTimeInMillis();
+                long millis = calendar.getTimeInMillis() - moment.getCalendar().getTimeInMillis();
                 return Math.abs(millis) < 1000;
             }
             case MomentUnit.MINUTE: {
-                long sec = mCalendar.getTimeInMillis() - moment.getCalendar().getTimeInMillis();
+                long sec = calendar.getTimeInMillis() - moment.getCalendar().getTimeInMillis();
                 return Math.abs(sec) < 1000 * 59;
             }
             case MomentUnit.HOUR: {
-                long min = mCalendar.getTimeInMillis() - moment.getCalendar().getTimeInMillis();
+                long min = calendar.getTimeInMillis() - moment.getCalendar().getTimeInMillis();
                 return Math.abs(min) < 1000 * 3600;
             }
             case MomentUnit.DAY: {
-                if (mMoment.fields().year() == moment.fields().year()
-                        && mMoment.fields().month() == moment.fields().month()
-                        && mMoment.fields().day() == moment.fields().day()) {
+                if (this.moment.fields().year() == moment.fields().year()
+                        && this.moment.fields().month() == moment.fields().month()
+                        && this.moment.fields().day() == moment.fields().day()) {
                     return true;
                 }
                 return false;
 
             }
             case MomentUnit.MONTH: {
-                if (mMoment.fields().year() == moment.fields().year()
-                        && mMoment.fields().month() == moment.fields().month()) {
+                if (this.moment.fields().year() == moment.fields().year()
+                        && this.moment.fields().month() == moment.fields().month()) {
                     return true;
                 }
                 return false;
             }
             case MomentUnit.YEAR: {
-                if (mMoment.fields().year() == moment.fields().year()) {
+                if (this.moment.fields().year() == moment.fields().year()) {
                     return true;
                 }
                 return false;
@@ -119,22 +115,22 @@ public class Query {
     }
 
     public boolean isBefore(Moment moment) {
-        return mCalendar.getTimeInMillis() < moment.getCalendar().getTimeInMillis();
+        return calendar.getTimeInMillis() < moment.getCalendar().getTimeInMillis();
     }
 
     public boolean isBeforeOrSame(Moment moment) {
-        return mCalendar.getTimeInMillis() <= moment.getCalendar().getTimeInMillis();
+        return calendar.getTimeInMillis() <= moment.getCalendar().getTimeInMillis();
     }
 
     public boolean isAfter(Moment moment) {
-        return mCalendar.getTimeInMillis() > moment.getCalendar().getTimeInMillis();
+        return calendar.getTimeInMillis() > moment.getCalendar().getTimeInMillis();
     }
 
     public boolean isAfterOrSame(Moment moment) {
-        return mCalendar.getTimeInMillis() >= moment.getCalendar().getTimeInMillis();
+        return calendar.getTimeInMillis() >= moment.getCalendar().getTimeInMillis();
     }
 
     public Moment moment() {
-        return mMoment;
+        return moment;
     }
 }

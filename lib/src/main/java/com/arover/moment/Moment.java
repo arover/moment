@@ -94,10 +94,10 @@ public class Moment implements Parcelable, Serializable {
      * @param month the month between 0-11.
      * @param day   the day of the month between 1-31.
      */
-    public Moment(final int year, @IntRange(from=0, to=11) final int month,
-                  @IntRange(from=1, to=31)
-    final int
-            day) {
+    public Moment(final int year,
+                  @IntRange(from = 0, to = 11) final int month,
+                  @IntRange(from = 1, to = 31) final int day) {
+
         calendar = Calendar.getInstance();
         calendar.set(year, month, day);
         Util.setTimeToBeginningOfDay(calendar);
@@ -127,7 +127,7 @@ public class Moment implements Parcelable, Serializable {
      * construct a moment by parsing date text with specific format and default locale.
      *
      * @param dateText date text to be parse
-     * @param format the format of date text.
+     * @param format   the format of date text.
      */
     public Moment(final String dateText, final String format) throws ParseException {
         SimpleDateFormat formatter = new SimpleDateFormat(format, Locale.getDefault());
@@ -140,8 +140,8 @@ public class Moment implements Parcelable, Serializable {
      * construct a moment by parsing date text with specific format and locale.
      *
      * @param dateText date text to be parse
-     * @param format the format of date text.
-     * @param locale locale for format
+     * @param format   the format of date text.
+     * @param locale   locale for format
      */
     public Moment(final String dateText, final String format, final Locale locale)
             throws ParseException {
@@ -157,7 +157,7 @@ public class Moment implements Parcelable, Serializable {
      *
      * @return elapsed milliseconds since boot.
      */
-    public long getElapsedRealtimeInMs(){
+    public long getElapsedRealtimeInMs() {
         return SystemClock.elapsedRealtime();
     }
 
@@ -166,12 +166,13 @@ public class Moment implements Parcelable, Serializable {
      *
      * @return elapsed nanoseconds since boot.
      */
-    public long getElapsedRealtimeInNanos(){
+    public long getElapsedRealtimeInNanos() {
         return SystemClock.elapsedRealtimeNanos();
     }
 
     /**
      * parcelable methods.
+     *
      * @param in parcel
      */
     protected Moment(final Parcel in) {
@@ -194,14 +195,13 @@ public class Moment implements Parcelable, Serializable {
     }
 
     /**
-     *
      * @return chinese lunar calendar
      */
-    public Lunar getLunar(){
+    public Lunar getLunar() {
         return new Lunar(calendar.getTimeInMillis());
     }
+
     /**
-     *
      * @return editor to modify this moment.
      */
     public Editor edit() {
@@ -263,10 +263,9 @@ public class Moment implements Parcelable, Serializable {
     }
 
     /**
-     *
      * @return time from now in seconds.
      */
-    public long timeFromNowInSeconds(){
-        return (new Date().getTime() - calendar.getTimeInMillis())/1000;
+    public long timeFromNowInSeconds() {
+        return (new Date().getTime() - calendar.getTimeInMillis()) / 1000;
     }
 }

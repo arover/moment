@@ -11,55 +11,55 @@ import static org.junit.Assert.assertEquals;
  */
 
 public class EditorTest {
-    private Moment mMoment;
+    private Moment moment;
 
     @Before
     public void setup() {
-        mMoment = new Moment(2017,Moment.MARCH,11);
+        moment = new Moment(2017,Moment.MARCH,11);
     }
 
     @Test
     public void setYear() throws Exception {
-        assertEquals(2018, mMoment.edit().year(2018).moment().fields().year());
+        assertEquals(2018, moment.edit().year(2018).moment().fields().year());
     }
 
     @Test
     public void setMonth() throws Exception {
-        assertEquals(Moment.APRIL, mMoment.edit().month(Month.APRIL).moment().fields()
+        assertEquals(Moment.APRIL, moment.edit().month(Moment.APRIL).moment().fields()
                 .month());
-        assertEquals(0, mMoment.edit().month(0).moment().fields().month());
+        assertEquals(0, moment.edit().month(0).moment().fields().month());
     }
 
     @Test
     public void setDay() throws Exception {
-        assertEquals(9, mMoment.edit().day(9).moment().fields().day());
+        assertEquals(9, moment.edit().day(9).moment().fields().day());
     }
 
     @Test
     public void setHour() throws Exception {
-        assertEquals(11, mMoment.edit().hour(11).moment().fields().hour());
+        assertEquals(11, moment.edit().hour(11).moment().fields().hour());
     }
 
     @Test
     public void setMinute() throws Exception {
-        assertEquals(30, mMoment.edit().minute(30).moment().fields().minute());
+        assertEquals(30, moment.edit().minute(30).moment().fields().minute());
     }
 
     @Test
     public void setSecond() throws Exception {
-        assertEquals(55, mMoment.edit().second(55).moment().fields().second());
+        assertEquals(55, moment.edit().second(55).moment().fields().second());
     }
 
     @Test
     public void minus() throws Exception {
 
-        assertEquals(10, mMoment.edit().minus(1,MomentUnit.DAY).moment().fields().day());
-        assertEquals(Moment.FEBRUARY, mMoment.edit().minus(1,MomentUnit.MONTH).moment()
+        assertEquals(10, moment.edit().minus(1,MomentUnit.DAY).moment().fields().day());
+        assertEquals(Moment.FEBRUARY, moment.edit().minus(1,MomentUnit.MONTH).moment()
                 .fields().month());
 
-        assertEquals(1, mMoment.edit().add(1,MomentUnit.HOUR).moment().fields().hour());
-        assertEquals(2, mMoment.edit().add(2,MomentUnit.MINUTE).moment().fields().minute());
-        assertEquals(5, mMoment.edit().add(5,MomentUnit.SECOND).moment().fields().second());
-        assertEquals(2018, mMoment.edit().add(1,MomentUnit.YEAR).moment().fields().year());
+        assertEquals(1, moment.edit().add(1,MomentUnit.HOUR).moment().fields().hour());
+        assertEquals(2, moment.edit().add(2,MomentUnit.MINUTE).moment().fields().minute());
+        assertEquals(5, moment.edit().add(5,MomentUnit.SECOND).moment().fields().second());
+        assertEquals(2018, moment.edit().add(1,MomentUnit.YEAR).moment().fields().year());
     }
 }

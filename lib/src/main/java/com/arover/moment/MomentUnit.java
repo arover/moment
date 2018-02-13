@@ -10,5 +10,5 @@ public class MomentUnit {
     public static final int HOUR = 4;
     public static final int MINUTE = 5;
     public static final int SECOND = 6;
-    public static final int MILISECOND = 7;
+    public static final int MILLISECOND = 7;
 }
