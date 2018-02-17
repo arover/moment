@@ -12,8 +12,8 @@ Parse, validate, manipulate, and display dates in android. Inspired by momentjs.
     moment.fields().minute(); //=> 23
         
     // Query
-    moment.query().isBefore(othermoment);
-    moment.query().lastMonday(); // the latest monday of this moment.
+    moment.query().isBefore(othermoment); // true or false
+    moment.query().lastMonday(); // the latest monday before this moment.
     moment.query().firstDayOfMonth(); // the first day of month of this moment.
     moment.query().isLeapYear();// false if  current year is not leap year
 
@@ -21,6 +21,7 @@ Parse, validate, manipulate, and display dates in android. Inspired by momentjs.
     // get some field
     moment.fields().year(); // => 2016
     moment.fields().month(); // => 7
+    moment.fields().day(); // => 29
     // ....
 
     // Edit
@@ -30,9 +31,11 @@ Parse, validate, manipulate, and display dates in android. Inspired by momentjs.
     moment.edit().minus(2, MomentUnit.DAY);
 
     // Display
-    // show moment as string.
+    // show moment as string with default format.
     moment.display().format();
-    
+    // format as yyyy-MM-dd
+    moment.display().format("yyyy-MM-dd");
+
     // Convert
     // convert to normal java date classes.
     moment.getCalendar();
@@ -53,6 +56,6 @@ Add it in your root build.gradle at the end of repositories:
 Step 2. Add the dependency
 ```groovy
     dependencies {
-        compile 'com.github.arover:moment:1.3'
+        compile 'com.github.arover:moment:1.6'
     }
 ```
