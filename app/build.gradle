@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 
+
 android {
     compileSdkVersion 26
     buildToolsVersion "26.0.3"
@@ -20,8 +21,14 @@ android {
 }
 
 dependencies {
-    compile project(':lib')
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile "com.android.support:appcompat-v7:26.1.0"
-    testCompile 'junit:junit:4.12'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation project(':lib')
+    implementation "com.android.support:appcompat-v7:26.1.0"
+
+//    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2-alpha1'
+//    androidTestUtil 'com.android.support.test:orchestrator:1.0.2-alpha1'
+
+    testImplementation 'junit:junit:4.12'
+//    testImplementation 'org.robolectric:robolectric:3.7.1'
 }

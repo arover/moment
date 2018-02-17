@@ -1,7 +1,5 @@
 package com.arover.moment;
 
-import android.util.Log;
-
 import java.security.InvalidParameterException;
 import java.util.Calendar;
 
@@ -31,7 +29,13 @@ public class Query {
         return new Moment(cal);
     }
 
-    public int daysOfMonth(int year, int month) {
+    /**
+     *
+     * @param year
+     * @param month
+     * @return days of the specified month.
+     */
+    public static int daysOfMonth(int year, int month) {
         if (month == Calendar.FEBRUARY && isLeapYear(year)) {
             return 29;
         }
@@ -43,7 +47,7 @@ public class Query {
         return isLeapYear(year);
     }
 
-    private boolean isLeapYear(int year) {
+    private static boolean isLeapYear(int year) {
         if (year % 4 != 0) {
             return false;
         } else if (year % 400 == 0) {
@@ -71,8 +75,12 @@ public class Query {
      * @param moment moment to compare
      * @return true if same with moment in specific time unit.
      */
-    public boolean isSame(final int unit, final Moment moment) {
+    public boolean isSame(final @MomentUnit.Unit int unit, final Moment moment) {
         switch (unit) {
+            case MomentUnit.MILLISECOND: {
+                long millis = calendar.getTimeInMillis() - moment.getCalendar().getTimeInMillis();
+                return millis == 0;
+            }
             case MomentUnit.SECOND: {
                 long millis = calendar.getTimeInMillis() - moment.getCalendar().getTimeInMillis();
                 return Math.abs(millis) < 1000;
@@ -108,10 +116,8 @@ public class Query {
                 return false;
             }
             default:
-                Log.e(TAG, "unknown unit=" + unit);
-                break;
+                throw new InvalidParameterException("unknown time unit " + unit);
         }
-        throw new InvalidParameterException("unknown time unit " + unit);
     }
 
     public boolean isBefore(Moment moment) {

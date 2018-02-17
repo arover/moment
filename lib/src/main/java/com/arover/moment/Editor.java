@@ -32,7 +32,7 @@ public class Editor {
      * @param x    0-n
      * @param unit time unit
      */
-    private void set(int x, int unit) {
+    private void set(int x, @MomentUnit.Unit int unit) {
         switch (unit) {
             case MomentUnit.YEAR: {
                 int year = calendar.get(Calendar.YEAR);
