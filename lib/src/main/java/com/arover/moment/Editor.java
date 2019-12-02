@@ -37,8 +37,11 @@ public class Editor {
             case MomentUnit.YEAR:
                 calendar.add(Calendar.YEAR, x);
                 break;
-            case MomentUnit.MONTH: 
-                calendar.add(Calendar.MONTH,x);
+            case MomentUnit.MONTH:
+                calendar.add(Calendar.MONTH, x);
+                break;
+            case MomentUnit.WEEK:
+                calendar.add(Calendar.WEEK_OF_YEAR, x);
                 break;
             case MomentUnit.DAY:
                 calendar.add(Calendar.DAY_OF_YEAR, x);

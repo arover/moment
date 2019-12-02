@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
         builder.append("Display: time from now = ").append(display.fromNow(this, twoDaysAndTwoHoursBefore)).append('\n');
         builder.append("Display: date = ").append(display.date()).append('\n');
-        builder.append("Display: dateIso = ").append(display.dateIso()).append('\n');
+        builder.append("Display: dateZhDefault = ").append(display.dateZhDefault()).append('\n');
         builder.append("Display: formatIso8601 = ").append(display.formatIso8601()).append('\n');
         builder.append("Display: shortestDate = ").append(display.shortestDate()).append('\n');
         builder.append("Display: simpleTime = ").append(display.simpleTime()).append('\n');

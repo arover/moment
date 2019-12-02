@@ -8,7 +8,7 @@ import java.util.Calendar;
  */
 public class Query {
     private static final String TAG = "Query";
-    static int[] daysOfMonth = new int[]{31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    private static int[] daysOfMonth = new int[]{31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
     private final Calendar calendar;
     private Moment moment;
