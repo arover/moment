@@ -10,8 +10,9 @@ import java.lang.annotation.RetentionPolicy;
  */
 public class MomentUnit {
 
+
     @Retention(RetentionPolicy.SOURCE)
-    @IntDef({YEAR, MONTH, DAY, HOUR, MINUTE, SECOND, MILLISECOND})
+    @IntDef({YEAR, MONTH, DAY, HOUR, MINUTE, SECOND, MILLISECOND,WEEK})
     public @interface Unit {}
 
     public static final int YEAR = 1;
@@ -21,4 +22,5 @@ public class MomentUnit {
     public static final int MINUTE = 5;
     public static final int SECOND = 6;
     public static final int MILLISECOND = 7;
+    public static final int WEEK = 8;
 }

@@ -60,6 +60,9 @@ public class EditorTest {
         assertEquals(1, moment.edit().add(1,MomentUnit.HOUR).moment().fields().hour());
         assertEquals(2, moment.edit().add(2,MomentUnit.MINUTE).moment().fields().minute());
         assertEquals(5, moment.edit().add(5,MomentUnit.SECOND).moment().fields().second());
-        assertEquals(2018, moment.edit().add(1,MomentUnit.YEAR).moment().fields().year());
+        assertEquals(2020, new Moment("2019-12-02","yyyy-MM-dd")
+                .edit().add(1, MomentUnit.YEAR).moment().fields().year());
+        assertEquals(2021,new Moment("2019-12-02","yyyy-MM-dd")
+                .edit().add(20,MomentUnit.MONTH).moment().fields().year());
     }
 }

@@ -34,27 +34,15 @@ public class Editor {
      */
     private void set(int x, @MomentUnit.Unit int unit) {
         switch (unit) {
-            case MomentUnit.YEAR: {
-                int year = calendar.get(Calendar.YEAR);
-                calendar.set(Calendar.YEAR, year + x);
+            case MomentUnit.YEAR:
+                calendar.add(Calendar.YEAR, x);
                 break;
-            }
-            case MomentUnit.MONTH: {
-                int months = x % 12;
-                int year = x / 12;
-
-                int month = calendar.get(Calendar.MONTH);
-                if (month + x > Calendar.DECEMBER) {
-                    calendar.set(Calendar.YEAR, calendar.get(Calendar.YEAR) + 1);
-                    calendar.set(Calendar.MONTH, (month + x) % 11);
-                } else if (month + x < Calendar.JANUARY) {
-                    calendar.set(Calendar.YEAR, calendar.get(Calendar.YEAR) - 1);
-                    calendar.set(Calendar.MONTH, (month + x) % 11);
-                } else {
-                    calendar.set(Calendar.MONTH, (month + x));
-                }
+            case MomentUnit.MONTH:
+                calendar.add(Calendar.MONTH, x);
                 break;
-            }
+            case MomentUnit.WEEK:
+                calendar.add(Calendar.WEEK_OF_YEAR, x);
+                break;
             case MomentUnit.DAY:
                 calendar.add(Calendar.DAY_OF_YEAR, x);
                 break;
