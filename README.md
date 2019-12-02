@@ -56,6 +56,6 @@ Add it in your root build.gradle at the end of repositories:
 Step 2. Add the dependency
 ```groovy
     dependencies {
-        compile 'com.github.arover:moment:1.6'
+        compile 'com.github.arover:moment:1.7'
     }
 ```
